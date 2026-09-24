@@ -4,6 +4,8 @@
  */
 package strategy;
 
+import model.Record;
+import java.util.List;
 /**
  *
  * @author ACER

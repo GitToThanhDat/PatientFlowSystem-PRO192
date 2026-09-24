@@ -8,6 +8,8 @@ package model;
  *
  * @author ACER
  */
-public class Receptionist {
-    
+public class Receptionist extends User {
+    public Receptionist(String id, String userName, String fullName, String password, boolean isActive){
+        super(id, Role.RECEPTIONIST, userName, password, fullName, isActive );
+    }
 }
