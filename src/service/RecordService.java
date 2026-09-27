@@ -61,6 +61,8 @@ public class RecordService {
     
     public boolean updateStatus(String recordId, RecordStatus newStatus)
     {
+        if(newStatus == null) return false;
+        
         Record record = this.findById(recordId);
         if(record == null) return false;
         
@@ -70,6 +72,8 @@ public class RecordService {
     
     public List<Record> search(RecordFilter filter)
     {
+        if(filter == null) return Collections.EMPTY_LIST;
+        
         List<Record> resultList = this.recordList.stream()
                 .filter(record -> record.match(filter))
                 .collect(Collectors.toList());
