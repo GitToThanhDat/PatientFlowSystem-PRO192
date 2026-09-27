@@ -82,6 +82,16 @@ public class Record implements Serializable {
         this.currentSegment = newSegment;
     }
     
+    public String getCurrentDepartmentId()
+    {
+        return this.currentDepartmentId;
+    }
+    
+    public void setCurrentDepartmentId(String newDeptId)
+    {
+        this.currentDepartmentId = newDeptId;
+    }
+    
     public List<VisitSegment> getHistory()
     {
         return Collections.unmodifiableList(this.history);
