@@ -27,7 +27,6 @@ public class Record implements Serializable {
     private LocalDateTime visitTime;
     
     
-    // default-static to disable user create new Record without from Service
     public Record(
             String id,
             String patientId,
