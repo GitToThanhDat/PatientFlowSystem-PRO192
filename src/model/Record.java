@@ -20,19 +20,28 @@ public class Record implements Serializable {
     private Priority priority;
     
     private VisitSegment currentSegment = null;
+    private String currentDepartmentId;
     
-    private List<VisitSegment> history;
+    private final List<VisitSegment> history;
     
     private LocalDateTime visitTime;
     
     
     // default-static to disable user create new Record without from Service
-    Record(
+    public Record(
             String id,
-            String patientId)
+            String patientId,
+            String departmentId,
+            Priority priority)
     {
         this.id = id;
         this.patientId = patientId;
+        this.currentDepartmentId = departmentId;
+        this.priority = priority;
+        
+        this.status = RecordStatus.WAITING;
+        this.history = new ArrayList<>();
+        this.visitTime = LocalDateTime.now();
     }
     
     public String getId()
@@ -59,18 +68,22 @@ public class Record implements Serializable {
     {
         return this.priority;
     }
+    public void setPriority(Priority newPriority)
+    {
+        this.priority = newPriority;
+    }
     
-    VisitSegment getCurrentSegment()
+    public VisitSegment getCurrentSegment()
     {
         return this.currentSegment;
     }
     
-    void setCurrentSegment(VisitSegment newSegment)
+    public void setCurrentSegment(VisitSegment newSegment)
     {
         this.currentSegment = newSegment;
     }
     
-    List<VisitSegment> getHistory()
+    public List<VisitSegment> getHistory()
     {
         return Collections.unmodifiableList(this.history);
     }
