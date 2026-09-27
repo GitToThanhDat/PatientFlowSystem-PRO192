@@ -11,5 +11,5 @@ import java.util.List;
  * @author ACER
  */
 public interface QueueStrategy {
-    
+    Record getNext(List<Record> records);
 }

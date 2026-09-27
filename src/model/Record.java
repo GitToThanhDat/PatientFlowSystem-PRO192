@@ -75,7 +75,7 @@ public class Record implements Serializable {
         return Collections.unmodifiableList(this.history);
     }
     
-    LocalDateTime getVisitTime()
+    public LocalDateTime getVisitTime()
     {
         return this.visitTime;
     }
