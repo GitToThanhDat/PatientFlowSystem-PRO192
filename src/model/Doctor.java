@@ -24,4 +24,10 @@ public class Doctor extends User{
     public String getCurrentRecordId(){
         return this.currentRecordId;
     }
+    public void setDeparmentId(String departmentId){
+        if (departmentId!=null) this.departmentId=departmentId;
+    }
+    public void setCurrentRecordId(String currentRecordId){
+        if (currentRecordId!=null) this.currentRecordId=currentRecordId;
+    }
 }

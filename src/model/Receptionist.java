@@ -9,7 +9,7 @@ package model;
  * @author ACER
  */
 public class Receptionist extends User {
-    public Receptionist(String id, String userName, String fullName, String password, boolean isActive){
+    public Receptionist(String id, String userName, String password, String fullName, boolean isActive){
         super(id, Role.RECEPTIONIST, userName, password, fullName, isActive );
     }
 }
