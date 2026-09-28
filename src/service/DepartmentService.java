@@ -15,7 +15,7 @@ public class DepartmentService {
         _idCounter = 1;
     }
 
-    // Hàm tìm kiếm dùng chung nội bộ - viết trước vì các hàm khác gọi lại
+    // Hàm tìm kiếm dùng chung nội bộ  
     public Department findById(String id) {
         for (Department dept : _departmentList) {
             if (dept.getId().equalsIgnoreCase(id)) {
@@ -25,7 +25,7 @@ public class DepartmentService {
         return null;
     }
 
-    // 4 bước: validate -> kiểm tra trùng -> thao tác -> thông báo
+    // validate -> kiểm tra trùng -> thao tác -> thông báo
     public String addDepartment(String name) {
         // Validate
         if (name == null || name.trim().isEmpty()) {
@@ -33,7 +33,7 @@ public class DepartmentService {
             return null;
         }
 
-        // Kiểm tra trùng tên (không phân biệt hoa/thường)
+        // Kiểm tra trùng tên
         for (Department dept : _departmentList) {
             if (dept.getName().equalsIgnoreCase(name)) {
                 System.out.println("Loi: Ten phong ban '" + name + "' da ton tai.");
@@ -41,14 +41,14 @@ public class DepartmentService {
             }
         }
 
-        // Sinh id và tạo đối tượng mới
+        // Sinh id và tạo đối tượng mới.
         String cleanedName = TextUtils.cleanName(name);
         String newId = "DEPT-" + cleanedName + "-" + _idCounter;
         Department newDept = new Department(newId, name);
         _departmentList.add(newDept);
         _idCounter++;
 
-        // Thông báo và trả về id
+        // Thông báo và trả về id.
         System.out.println("Da them phong ban '" + name + "' voi id: " + newId);
         return newId;
     }
@@ -79,7 +79,7 @@ public class DepartmentService {
         return _departmentList;
     }
 
-    // Đoạn test nhỏ để tự kiểm tra 5 hàm trước khi push (theo checklist)
+    // test nhé.
     public static void main(String[] args) {
         DepartmentService service = new DepartmentService();
 
@@ -87,7 +87,7 @@ public class DepartmentService {
         String id1 = service.addDepartment("San Phu Khoa");
         String id2 = service.addDepartment("Noi Tong Quat");
 
-        // Test thêm trùng tên -> phải báo lỗi và trả về null
+        // Test thêm trùng tên báo lỗi và trả về null
         service.addDepartment("san phu khoa");
 
         // Test findById
