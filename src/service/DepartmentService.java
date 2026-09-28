@@ -80,7 +80,7 @@ public class DepartmentService {
     }
 
     // test nhé.
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         DepartmentService service = new DepartmentService();
 
         // Test addDepartment
@@ -112,5 +112,5 @@ public class DepartmentService {
         for (Department d : service.getAll()) {
             System.out.println("  " + d.getId() + " - " + d.getName());
         }
-    }
+    }*/
 }
