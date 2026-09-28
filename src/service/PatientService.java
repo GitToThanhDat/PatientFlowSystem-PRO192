@@ -23,7 +23,11 @@ public class PatientService {
         this._idCounter = 1;
     }
     
-    public Patient findById(String id) {        
+    public Patient findById(String id) {
+        if(id == null) {
+            return null;
+        }
+        
         for(Patient p : _patientList) {
             if(p.getId().equals(id)) {
                 return p;
