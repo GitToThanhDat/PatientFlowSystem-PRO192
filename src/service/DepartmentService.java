@@ -78,39 +78,4 @@ public class DepartmentService {
     public List<Department> getAll() {
         return _departmentList;
     }
-
-    // test nhé.
-    /*public static void main(String[] args) {
-        DepartmentService service = new DepartmentService();
-
-        // Test addDepartment
-        String id1 = service.addDepartment("San Phu Khoa");
-        String id2 = service.addDepartment("Noi Tong Quat");
-
-        // Test thêm trùng tên báo lỗi và trả về null
-        service.addDepartment("san phu khoa");
-
-        // Test findById
-        Department found = service.findById(id1);
-        System.out.println("Tim thay: " + (found != null ? found.getName() : "null"));
-
-        // Test updateDepartment
-        service.updateDepartment(id2, "Noi Tong Hop");
-
-        // Test updateDepartment với id không tồn tại
-        service.updateDepartment("DEPT-khongton-99", "Ten moi");
-
-        // Test getAll
-        System.out.println("Danh sach phong ban:");
-        for (Department d : service.getAll()) {
-            System.out.println("  " + d.getId() + " - " + d.getName());
-        }
-
-        // Test remove
-        service.remove(id1);
-        System.out.println("Sau khi xoa, con lai:");
-        for (Department d : service.getAll()) {
-            System.out.println("  " + d.getId() + " - " + d.getName());
-        }
-    }*/
 }

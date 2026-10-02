@@ -15,7 +15,7 @@ import util.TextUtils;
  * @author ACER
  */
 public class PatientService {
-    private List<Patient> _patientList;
+    private final List<Patient> _patientList;
     private int _idCounter;
     
     public PatientService() {
