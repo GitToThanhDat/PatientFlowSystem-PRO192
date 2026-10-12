@@ -25,4 +25,5 @@ public class QueueService {
     public Record getNext(List<Record> waitingQueue){
         return this._strategy.getNext(waitingQueue);
     }
+    public String getStrategyName(){ return this._strategy.getName();}
 }

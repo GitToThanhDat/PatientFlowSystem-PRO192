@@ -39,7 +39,6 @@ public class PatientService {
     
     public String register(String name) {
         if (name == null || name.trim().isEmpty()){
-            System.out.println("Loi: ten benh nhan khong duoc de trong.");
             return null;
         }
         
@@ -48,7 +47,6 @@ public class PatientService {
         Patient patient = new Patient(id, name.trim());
         _patientList.add(patient);
         
-        System.out.println("Dang ky thanh cong benh nhan: " + id);
         
         return id;
     }
@@ -57,18 +55,15 @@ public class PatientService {
         Patient patient = findById(id);
         
         if (patient == null) {
-            System.out.println("Loi: khong tim thay benh nhan co id " + id);
             return false;
         }
         
         if (newName == null || newName.trim().isEmpty()) {
-            System.out.println("Loi: ten moi khong duoc de trong.");
             return false;
         }
         
         patient.setName(newName.trim());
         
-        System.out.println("Cap nhat thanh cong benh nhan: " + id);
         
         return true;
     }
@@ -77,12 +72,10 @@ public class PatientService {
         Patient patient = findById(id);
         
         if (patient == null) {
-            System.out.println("Loi: khong tim thay benh nhan co id " + id);
             return false;
         }
         
         _patientList.remove(patient);
-        System.out.println("Da xoa benh nhan: " + id);
         return true;
     }
 

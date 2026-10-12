@@ -26,5 +26,10 @@ public class FCFSStrategy implements QueueStrategy {
         }
         return earliest;
     }
+
+    @Override
+    public String getName() {
+        return "FCFS";
+    }
     
 }

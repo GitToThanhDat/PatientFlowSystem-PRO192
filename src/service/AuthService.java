@@ -42,7 +42,6 @@ public class AuthService {
         
         for (User u: this._userList){
             if (u.getUserName().equalsIgnoreCase(userName)){
-                System.out.println("This username is already used.");
                 return null;
             }
         }
@@ -61,7 +60,6 @@ public class AuthService {
                 this._userList.add(ad);
                 break;
         }
-        System.out.println("Register successfully and your own id is: "+id); //Đồng bộ thông báo và gỡ bỏ việc thông báo cho cả team.
         return id;
     }
     

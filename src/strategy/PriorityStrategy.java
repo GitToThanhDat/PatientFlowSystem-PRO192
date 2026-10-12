@@ -24,4 +24,9 @@ public class PriorityStrategy implements QueueStrategy {
         }
         return best;
     }
+
+    @Override
+    public String getName() {
+        return "Priority";
+    }
 }
