@@ -145,4 +145,9 @@ public class Record implements Serializable {
         
         return true;
     }
+    
+    public void addToHistory(VisitSegment segment)
+    {
+        this.history.add(segment);
+    }
 }
