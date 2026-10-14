@@ -12,11 +12,12 @@ import java.time.LocalDateTime;
  */
 public class RecordFilter{
 
-    private String patientId;
-    private String patientNameKeyword;
-    private LocalDateTime visitDate;
-    private RecordStatus status;
-    private String departmentId;
+    private String patientId = null;
+    // only search by keyword when patientId is null
+    private String patientNameKeyword = null;
+    private LocalDateTime visitDate = null;
+    private RecordStatus status = null;
+    private String departmentId = null;
 
     public RecordFilter(){}
 

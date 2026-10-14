@@ -37,4 +37,9 @@ public class Department {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public void addToQueue(String recordId)
+    {
+        this.waitingQueue.add(recordId);
+    }
 }

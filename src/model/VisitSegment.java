@@ -69,6 +69,11 @@ public class VisitSegment{
     {
         this.testOrder = testOrder;
     }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+    
     public void setEndTime(LocalDateTime endTime)
     {
         this.endTime = endTime;

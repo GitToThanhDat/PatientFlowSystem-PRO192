@@ -102,48 +102,9 @@ public class Record implements Serializable {
         return this.visitTime;
     }
     
-    public boolean match(RecordFilter filter)
+    public void setVisitTime(LocalDateTime time)
     {
-        if(filter.getPatientId() != null)
-        {
-            if(!this.patientId.equals(filter.getPatientId()))
-                return false;
-        }
-        else if(filter.getPatientNameKeyword() != null)
-        {
-            // TODO: Implement this feature
-            // we have to get name of patient from PatientService
-        }
-        
-        if(filter.getDepartmentId() != null)
-        {
-            boolean found = false;
-            
-            if(this.getCurrentDepartmentId().equals(filter.getDepartmentId()))
-                found = true;
-            
-            if(this.getHistory().stream().anyMatch(
-                    s -> s.getDepartmentId().equals(filter.getDepartmentId())))
-                found = true;
-            
-            if(!found)
-                return false;
-        }
-        
-        if(filter.getVisitDate() != null)
-        {
-            if(!this.visitTime.toLocalDate().equals(
-                    filter.getVisitDate().toLocalDate()))
-                return false;
-        }
-        
-        if(filter.getStatus() != null)
-        {
-            if(!this.status.equals(filter.getStatus()))
-                return false;
-        }
-        
-        return true;
+        this.visitTime = time;
     }
     
     public void addToHistory(VisitSegment segment)
@@ -151,4 +112,5 @@ public class Record implements Serializable {
         this.history.add(segment);
         this.currentSegment = null;
     }
+    
 }

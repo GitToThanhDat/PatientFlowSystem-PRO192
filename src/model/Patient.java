@@ -33,6 +33,11 @@ public class Patient {
         return recordIds;
     }
     
+    public void addRecord(String recordId)
+    {
+        this.recordIds.add(recordId);
+    }
+    
     public void setName(String name) {
         this.name = name;
     }
