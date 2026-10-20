@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
  *
  * @author ACER
  */
-public class VisitSegment{
+public class VisitSegment implements Serializable {
     private String departmentId;
     private String doctorId;
     private String examResults;
