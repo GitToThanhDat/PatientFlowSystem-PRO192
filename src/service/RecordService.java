@@ -83,15 +83,17 @@ public class RecordService {
         return recordId;
     }
     
-    public boolean updateStatus(String recordId, RecordStatus newStatus)
+    public void updateStatus(String recordId, RecordStatus newStatus)
+            throws InvalidInputException, NotFoundException
     {
-        if(newStatus == null) return false;
-        
+        if(newStatus == null) 
+            throw new InvalidInputException("newStatus could not be null");
+            
         Record record = this.findById(recordId);
-        if(record == null) return false;
+        if(record == null)
+            throw new NotFoundException("Record with id " + recordId + " not found");
         
         record.setStatus(newStatus);
-        return true;
     }
     
     private boolean match(Record record, RecordFilter filter)
@@ -132,6 +134,7 @@ public class RecordService {
         if(filter == null) return Collections.emptyList();
         
         List<String> recordIdList = new ArrayList<>();
+        boolean searchAll = true;
         
         if(filter.getPatientId() != null)
         {
@@ -140,6 +143,7 @@ public class RecordService {
             {
                 recordIdList.addAll(patient.getRecordIds());
             }
+            searchAll = false;
         }
         else if(filter.getPatientNameKeyword() != null)
         {
@@ -148,6 +152,7 @@ public class RecordService {
             {
                 recordIdList.addAll(patient.getRecordIds());
             }
+            searchAll = false;
         }
         
         Collections.sort(recordIdList);
@@ -155,7 +160,7 @@ public class RecordService {
         
         for(Record record : this.recordList)
         {
-            if(Collections.binarySearch(recordIdList, record.getId()) >= 0)
+            if(searchAll || Collections.binarySearch(recordIdList, record.getId()) >= 0)
             {
                 if(this.match(record, filter))
                     resultList.add(record);
