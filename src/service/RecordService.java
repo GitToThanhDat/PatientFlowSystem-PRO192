@@ -83,15 +83,17 @@ public class RecordService {
         return recordId;
     }
     
-    public boolean updateStatus(String recordId, RecordStatus newStatus)
+    public void updateStatus(String recordId, RecordStatus newStatus)
+            throws InvalidInputException, NotFoundException
     {
-        if(newStatus == null) return false;
-        
+        if(newStatus == null) 
+            throw new InvalidInputException("newStatus could not be null");
+            
         Record record = this.findById(recordId);
-        if(record == null) return false;
+        if(record == null)
+            throw new NotFoundException("Record with id " + recordId + " not found");
         
         record.setStatus(newStatus);
-        return true;
     }
     
     private boolean match(Record record, RecordFilter filter)
