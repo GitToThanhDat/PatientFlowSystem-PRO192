@@ -134,6 +134,7 @@ public class RecordService {
         if(filter == null) return Collections.emptyList();
         
         List<String> recordIdList = new ArrayList<>();
+        boolean searchAll = true;
         
         if(filter.getPatientId() != null)
         {
@@ -142,6 +143,7 @@ public class RecordService {
             {
                 recordIdList.addAll(patient.getRecordIds());
             }
+            searchAll = false;
         }
         else if(filter.getPatientNameKeyword() != null)
         {
@@ -150,6 +152,7 @@ public class RecordService {
             {
                 recordIdList.addAll(patient.getRecordIds());
             }
+            searchAll = false;
         }
         
         Collections.sort(recordIdList);
@@ -157,7 +160,7 @@ public class RecordService {
         
         for(Record record : this.recordList)
         {
-            if(Collections.binarySearch(recordIdList, record.getId()) >= 0)
+            if(searchAll || Collections.binarySearch(recordIdList, record.getId()) >= 0)
             {
                 if(this.match(record, filter))
                     resultList.add(record);
