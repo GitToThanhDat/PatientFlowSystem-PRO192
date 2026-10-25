@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package service;
+import exception.AuthenticationException;
+import exception.DuplicateDataException;
+import exception.InvalidInputException;
 import java.util.List;
 import java.util.ArrayList;
 import model.Admin;
@@ -36,7 +39,7 @@ public class AuthService {
             Role role, 
             String userName, 
             String password, 
-            String fullName){
+            String fullName) throws InvalidInputException, DuplicateDataException{
         
         if (role ==null || userName ==null || password == null || fullName == null) return null;
         
@@ -63,7 +66,7 @@ public class AuthService {
         return id;
     }
     
-    public User login(String userName, String password){ //Hàmm này sẽ trả về null còn việc thông báo trong exception sẽ là username hoặc password sai chứ không chỉ rõ.
+    public User login(String userName, String password) throws AuthenticationException{ //Hàmm này sẽ trả về null còn việc thông báo trong exception sẽ là username hoặc password sai chứ không chỉ rõ.
         if (userName == null || password == null) return null;
         for(User u : this._userList){
             if (u.getUserName().equals(userName) && u.getPassword().equals(password)){
@@ -73,7 +76,8 @@ public class AuthService {
         }
         return null;    
     }
-    public boolean updateAccountFullName(String id, String newFullName){
+    public boolean updateAccount(String id, String newFullName) 
+    { //Chỉ được update tên thôi sao?
         User u = findById(id);
         if (u!=null) {
             u.setFullName(newFullName);

@@ -1,4 +1,4 @@
-package repository;
+package data;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Department;
 
-public class DepartmentRepository {
+public class DepartmentData { //Repo liên quan đến nhập xuất... File I/O
 
     private static final String DIR = "data";
     private static final String FILE_PATH = "data/departments.txt";

@@ -1,4 +1,4 @@
-package repository;
+package data;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Patient;
 
-public class PatientRepository {
+public class PatientData {
 
     private static final String FILE_PATH = "data/patients.txt";
 

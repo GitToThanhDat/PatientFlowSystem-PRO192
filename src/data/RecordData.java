@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package repository;
+package data;
 import model.*;
 import java.util.*;
 import java.io.*;
@@ -12,7 +12,7 @@ import java.io.IOException;
  *
  * @author khanh3327
  */
-public class RecordRepository {
+public class RecordData {
     
     private static final String FILE_PATH = "data/records.txt";
     

@@ -8,7 +8,7 @@ package model;
  *
  * @author ACER
  */
-public class User {
+public class User { //abstract class, phải chọn luôn một vị trí chức vụ. 
     private String id;
     private Role role;
     private String userName;
