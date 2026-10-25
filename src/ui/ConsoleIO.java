@@ -74,6 +74,7 @@ public class ConsoleIO {
         System.out.println(sb.append('|'));
     }
     
-   
-
+    public static void pauseConsole() {
+        new Scanner(System.in).nextLine();
+    }
 }
