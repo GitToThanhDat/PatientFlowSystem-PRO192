@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class RecordData {
     
-    private static final String FILE_PATH = "data/records.txt";
+    private static final String FILE_PATH = "data/records.dat";
     
     public void save(List<Record> list) throws IOException
     {
