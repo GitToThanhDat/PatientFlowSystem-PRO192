@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package service;
 
 import java.util.*;
@@ -10,10 +6,6 @@ import model.*;
 import exception.*;
 import java.util.stream.Stream;
 
-/**
- *
- * @author algori07
- */
 public class RecordService {
     private final List<Record> recordList;
     private int idCounter;
@@ -42,33 +34,95 @@ public class RecordService {
         return null;
     }
     
+    public Record findActiveByPatient(String patientId)
+    {
+        for(Record record : this.recordList)
+        {
+            if(record.getPatientId().equals(patientId)
+                    && record.getStatus() != RecordStatus.DONE)
+            {
+                return record;
+            }
+        }
+        return null;
+    }
+    
+    public void ensureNoActiveVisit(String patientId) throws DuplicateDataException
+    {
+        Record active = this.findActiveByPatient(patientId);
+        if(active == null)
+            return;
+        Patient patient = this.patientService.findById(patientId);
+        Department department = this.departmentService.findById(active.getCurrentDepartmentId());
+        throw new DuplicateDataException("Patient '" + (patient == null ? patientId : patient.getName())
+                + "' already has an active visit"
+                + (department == null ? "" : " at '" + department.getName() + "'")
+                + " (" + active.getStatus() + ").");
+    }
+    
+    public boolean hasRecordsForPatient(String patientId)
+    {
+        for(Record record : this.recordList)
+        {
+            if(record.getPatientId().equals(patientId))
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean isDepartmentReferenced(String departmentId)
+    {
+        for(Record record : this.recordList)
+        {
+            if(departmentId.equals(record.getCurrentDepartmentId()))
+                return true;
+            for(VisitSegment segment : record.getHistory())
+            {
+                if(departmentId.equals(segment.getDepartmentId()))
+                    return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean hasExaminedBy(String doctorId)
+    {
+        for(Record record : this.recordList)
+        {
+            for(VisitSegment segment : record.getHistory())
+            {
+                if(doctorId.equals(segment.getDoctorId()))
+                    return true;
+            }
+        }
+        return false;
+    }
+    
     public String register(
             String patientId,
             String departmentId,
             Priority priority)
-        throws InvalidInputException, NotFoundException
+        throws InvalidInputException, NotFoundException, DuplicateDataException
     {
         if(patientId == null)
             throw new InvalidInputException("patientId must not be null!");
         Patient patient = this.patientService.findById(patientId);
         if(patient == null)
-            throw new NotFoundException("Patient not found with id: " + patientId);
+            throw new NotFoundException("Patient not found.");
         
         if(departmentId == null)
             throw new InvalidInputException("departmentId must not be null!");
         Department department = this.departmentService.findById(departmentId);
         if(department == null)
-            throw new NotFoundException("Department not found with id: " + departmentId);
+            throw new NotFoundException("Department not found.");
         
         if(priority == null)
             throw new InvalidInputException("priority must not be null");
         
-        StringBuilder recordIdBuilder = new StringBuilder();
-        recordIdBuilder.append("REC-");
-        recordIdBuilder.append(this.idCounter);
-        this.idCounter++;
+        this.ensureNoActiveVisit(patientId);
         
-        String recordId = recordIdBuilder.toString();
+        String recordId = "vis-" + this.idCounter;
+        this.idCounter++;
         
         Record record = new Record(
                 recordId,
@@ -91,9 +145,23 @@ public class RecordService {
             
         Record record = this.findById(recordId);
         if(record == null)
-            throw new NotFoundException("Record with id " + recordId + " not found");
+            throw new NotFoundException("Visit record not found.");
         
         record.setStatus(newStatus);
+
+        Department dept = this.departmentService.findById(record.getCurrentDepartmentId());
+        if(dept != null)
+        {
+            if(newStatus == RecordStatus.WAITING)
+            {
+                if(!dept.getWaitingQueue().contains(recordId))
+                    dept.addToQueue(recordId);
+            }
+            else
+            {
+                dept.getWaitingQueue().remove(recordId);
+            }
+        }
     }
     
     private boolean match(Record record, RecordFilter filter)
@@ -131,7 +199,7 @@ public class RecordService {
     
     public List<Record> search(RecordFilter filter)
     {
-        if(filter == null) return Collections.emptyList();
+        if(filter == null) return new ArrayList<>(this.recordList);
         
         List<String> recordIdList = new ArrayList<>();
         boolean searchAll = true;
@@ -193,18 +261,28 @@ public class RecordService {
         return Collections.unmodifiableList(this.recordList);
     }
     
+    public int getNextNumber()
+    {
+        return this.idCounter;
+    }
+    
+    public void ensureNextNumberAtLeast(int number)
+    {
+        if(number > this.idCounter)
+            this.idCounter = number;
+    }
+    
     public void loadData(List<Record> list)
     {
         this.recordList.clear();
-        this.recordList.addAll(list);
-        
+        if(list != null) this.recordList.addAll(list);
+
         int maxId = 0;
         for(Record record : this.recordList)
         {
-            int currentId = Integer.parseInt(record.getId().replace("REC-", ""));
-            maxId = Math.max(maxId, currentId);
+            maxId = Math.max(maxId, util.TextUtils.extractCounter(record.getId()));
         }
-        this.idCounter = maxId;
+        this.idCounter = maxId + 1;
     }
     
 }

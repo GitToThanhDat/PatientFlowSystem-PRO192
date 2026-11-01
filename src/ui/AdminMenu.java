@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Department;
 import model.RecordStatus;
+import model.User;
 import service.AuthService;
 import service.DepartmentService;
 import service.QueueService;
+import service.RecordService;
 import service.StatisticsService;
 import strategy.FCFSStrategy;
 import strategy.PriorityStrategy;
@@ -22,15 +24,24 @@ public class AdminMenu {
     private final QueueService queueService;
     private final StatisticsService statisticsService;
     private final AuthService authService;
+    private final RecordService recordService;
+    private final User currentUser;
+    private final Runnable onStrategyChanged;
 
     public AdminMenu(DepartmentService departmentService,
                      QueueService queueService,
                      StatisticsService statisticsService,
-                     AuthService authService) {
+                     AuthService authService,
+                     RecordService recordService,
+                     User currentUser,
+                     Runnable onStrategyChanged) {
         this.departmentService = departmentService;
         this.queueService = queueService;
         this.statisticsService = statisticsService;
         this.authService = authService;
+        this.recordService = recordService;
+        this.currentUser = currentUser;
+        this.onStrategyChanged = onStrategyChanged;
     }
 
     public void run() {
@@ -85,7 +96,7 @@ public class AdminMenu {
                 viewStatistics();
                 break;
             case 7:
-                new AccountMenu(authService, departmentService).run();
+                new AccountMenu(authService, departmentService, recordService, currentUser).run();
                 break;
             default:
                 break;
@@ -95,21 +106,41 @@ public class AdminMenu {
     private void addDepartment() throws InvalidInputException, DuplicateDataException {
         String name = ConsoleIO.readLine("Department name: ");
         String id = departmentService.addDepartment(name);
-        ConsoleIO.success("Department added with ID: " + id);
+        ConsoleIO.success("Department '" + departmentService.findById(id).getName() + "' added.");
     }
 
     private void updateDepartment()
             throws NotFoundException, InvalidInputException, DuplicateDataException {
-        String id = ConsoleIO.readLine("Department ID: ");
-        String newName = ConsoleIO.readLine("New name: ");
-        departmentService.updateDepartment(id, newName);
-        ConsoleIO.success("Department " + id + " updated.");
+        Department department = Picker.department(departmentService, "Department to update");
+        if (department == null) {
+            return;
+        }
+        String oldName = department.getName();
+        String newName = ConsoleIO.readLine("New name for '" + oldName + "': ");
+        departmentService.updateDepartment(department.getId(), newName);
+        ConsoleIO.success("Department '" + oldName + "' renamed to '" + department.getName() + "'.");
     }
 
-    private void removeDepartment() throws NotFoundException {
-        String id = ConsoleIO.readLine("Department ID: ");
-        departmentService.remove(id);
-        ConsoleIO.success("Department " + id + " removed.");
+    private void removeDepartment() throws NotFoundException, InvalidInputException {
+        Department department = Picker.department(departmentService, "Department to remove");
+        if (department == null) {
+            return;
+        }
+        String name = department.getName();
+        if (authService.countDoctorsInDepartment(department.getId()) > 0) {
+            throw new InvalidInputException("Cannot remove '" + name
+                    + "': doctors are still assigned to it. Reassign them first.");
+        }
+        if (recordService.isDepartmentReferenced(department.getId())) {
+            throw new InvalidInputException("Cannot remove '" + name
+                    + "': it already has visit records.");
+        }
+        if (!ConsoleIO.confirm("Remove department '" + name + "'?")) {
+            ConsoleIO.info("Nothing was removed.");
+            return;
+        }
+        departmentService.remove(department.getId());
+        ConsoleIO.success("Department '" + name + "' removed.");
     }
 
     private void viewDepartments() {
@@ -119,10 +150,16 @@ public class AdminMenu {
             return;
         }
         List<String[]> rows = new ArrayList<>();
+        int number = 1;
         for (Department d : list) {
-            rows.add(new String[]{d.getId(), d.getName()});
+            rows.add(new String[]{
+                String.valueOf(number++),
+                d.getName(),
+                String.valueOf(authService.countDoctorsInDepartment(d.getId())),
+                String.valueOf(d.getWaitingQueue().size())
+            });
         }
-        ConsoleIO.printTable(new String[]{"ID", "Name"}, rows);
+        ConsoleIO.printTable(new String[]{"No.", "Department", "Doctors", "Waiting"}, rows);
     }
 
     private void switchStrategy() throws InvalidInputException {
@@ -135,6 +172,7 @@ public class AdminMenu {
         } else {
             queueService.setStrategy(new PriorityStrategy());
         }
+        onStrategyChanged.run();
         ConsoleIO.success("Queue strategy switched to " + queueService.getStrategyName());
     }
 
@@ -142,10 +180,10 @@ public class AdminMenu {
         List<String[]> rows = new ArrayList<>();
         rows.add(new String[]{"Departments", String.valueOf(statisticsService.countDepartments())});
         rows.add(new String[]{"Patients", String.valueOf(statisticsService.countPatients())});
-        rows.add(new String[]{"Records", String.valueOf(statisticsService.countRecords())});
+        rows.add(new String[]{"Records (total)", String.valueOf(statisticsService.countRecords())});
         for (RecordStatus s : RecordStatus.values()) {
             rows.add(new String[]{
-                "Records - " + s,
+                "Records now " + s,
                 String.valueOf(statisticsService.countRecordsByStatus(s))
             });
         }

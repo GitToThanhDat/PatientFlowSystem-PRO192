@@ -1,0 +1,2741 @@
+{
+ "format": 1,
+ "created": "2026-11-01 16:28",
+ "note": "Mỗi entry cho biết comment nằm ở đâu (anchor = dòng code ngay sau/cùng dòng, occurrence = đó là lần xuất hiện thứ mấy của dòng code đó trong file).",
+ "files": {
+  "src/data/DepartmentData.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 7,
+     "end_line": 8,
+     "stripped_line": 7,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: DepartmentData trước đây ghi file departments.txt (id|name) bằng BufferedWriter/BufferedReader.",
+      "// Nay chuyển sang serialization (departments.dat) thông qua SerialStorage. Chữ ký save/load giữ nguyên."
+     ],
+     "anchor": "public class DepartmentData {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 0,
+     "line": 9,
+     "end_line": 9,
+     "stripped_line": 7,
+     "text": [
+      "//Repo liên quan đến nhập xuất... File I/O"
+     ],
+     "original": "public class DepartmentData { //Repo liên quan đến nhập xuất... File I/O",
+     "anchor": "public class DepartmentData {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 11,
+     "end_line": 11,
+     "stripped_line": 9,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: trước là data/departments.txt"
+     ],
+     "original": "    private static final String FILE_NAME = \"departments.dat\"; //có điều chỉnh với cách viết ban đầu: trước là data/departments.txt",
+     "anchor": "private static final String FILE_NAME = \"departments.dat\";",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/data/PatientData.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 7,
+     "end_line": 8,
+     "stripped_line": 7,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: PatientData trước đây ghi file patients.txt (id|name) bằng BufferedWriter/BufferedReader.",
+      "// Nay chuyển sang serialization (patients.dat) thông qua SerialStorage. Chữ ký save/load giữ nguyên."
+     ],
+     "anchor": "public class PatientData {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 11,
+     "end_line": 11,
+     "stripped_line": 9,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: trước là data/patients.txt"
+     ],
+     "original": "    private static final String FILE_NAME = \"patients.dat\"; //có điều chỉnh với cách viết ban đầu: trước là data/patients.txt",
+     "anchor": "private static final String FILE_NAME = \"patients.dat\";",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/data/RecordData.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package data;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 1,
+     "line": 10,
+     "end_line": 19,
+     "stripped_line": 6,
+     "text": [
+      "/**",
+      " *",
+      " * @author khanh3327",
+      " *",
+      " * //có điều chỉnh với cách viết ban đầu: bản đầu của Khánh đã dùng serialization nhưng",
+      " *   (1) load() ném FileNotFoundException khi chưa có file records.dat (lần chạy đầu tiên),",
+      " *   (2) không tạo thư mục data/ nên save() lỗi khi chưa có thư mục,",
+      " *   (3) bỏ qua lỗi file hỏng bằng cách trả list rỗng (lần save sau sẽ đè mất dữ liệu cũ).",
+      " *   Nay dùng chung SerialStorage để xử lý cả 3 điểm trên; chữ ký save/load giữ nguyên.",
+      " */"
+     ],
+     "anchor": "public class RecordData {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 22,
+     "end_line": 22,
+     "stripped_line": 8,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: trước là FILE_PATH = \"data/records.dat\""
+     ],
+     "original": "    private static final String FILE_NAME = \"records.dat\"; //có điều chỉnh với cách viết ban đầu: trước là FILE_PATH = \"data/records.dat\"",
+     "anchor": "private static final String FILE_NAME = \"records.dat\";",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/exception/AuthenticationException.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package exception;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class AuthenticationException extends Exception {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 0,
+     "line": 13,
+     "end_line": 13,
+     "stripped_line": 5,
+     "text": [
+      "// thằng super này sẽ lấy thông tin message này để sau này thông qua class Exception để sử dụng các hàm khác nó sẽ hiển thị thông tin lỗi đúng như ý mình muốn."
+     ],
+     "original": "        super(message); // thằng super này sẽ lấy thông tin message này để sau này thông qua class Exception để sử dụng các hàm khác nó sẽ hiển thị thông tin lỗi đúng như ý mình muốn.",
+     "anchor": "super(message);",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/exception/DuplicateDataException.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package exception;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class DuplicateDataException extends Exception {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/exception/InvalidInputException.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package exception;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class InvalidInputException extends Exception {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/exception/NotFoundException.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package exception;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class NotFoundException extends Exception {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/Admin.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class Admin extends User {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 12,
+     "end_line": 12,
+     "stripped_line": 4,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization"
+     ],
+     "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
+     "anchor": "private static final long serialVersionUID = 1L;",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/Department.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 9,
+     "end_line": 12,
+     "stripped_line": 5,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class Department implements Serializable {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 13,
+     "end_line": 13,
+     "stripped_line": 5,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm implements Serializable để lưu bằng serialization"
+     ],
+     "original": "public class Department implements Serializable { //có điều chỉnh với cách viết ban đầu: thêm implements Serializable để lưu bằng serialization",
+     "anchor": "public class Department implements Serializable {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 14,
+     "end_line": 14,
+     "stripped_line": 6,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization"
+     ],
+     "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
+     "anchor": "private static final long serialVersionUID = 1L;",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/Doctor.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class Doctor extends User{",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 12,
+     "end_line": 12,
+     "stripped_line": 4,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization"
+     ],
+     "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
+     "anchor": "private static final long serialVersionUID = 1L;",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/Patient.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 10,
+     "end_line": 13,
+     "stripped_line": 6,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class Patient implements Serializable {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 14,
+     "end_line": 14,
+     "stripped_line": 6,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm implements Serializable để lưu bằng serialization"
+     ],
+     "original": "public class Patient implements Serializable { //có điều chỉnh với cách viết ban đầu: thêm implements Serializable để lưu bằng serialization",
+     "anchor": "public class Patient implements Serializable {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 15,
+     "end_line": 15,
+     "stripped_line": 7,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization"
+     ],
+     "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
+     "anchor": "private static final long serialVersionUID = 1L;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 2,
+     "line": 22,
+     "end_line": 22,
+     "stripped_line": 14,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 2): thêm tham số dateOfBirth để phân biệt bệnh nhân trùng tên"
+     ],
+     "original": "    public Patient(String id, String name, LocalDate dateOfBirth){ //có điều chỉnh với cách viết ban đầu (đợt 2): thêm tham số dateOfBirth để phân biệt bệnh nhân trùng tên",
+     "anchor": "public Patient(String id, String name, LocalDate dateOfBirth){",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/Priority.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public enum Priority {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/Receptionist.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class Receptionist extends User {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 12,
+     "end_line": 12,
+     "stripped_line": 4,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization"
+     ],
+     "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
+     "anchor": "private static final long serialVersionUID = 1L;",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/Record.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 11,
+     "end_line": 14,
+     "stripped_line": 7,
+     "text": [
+      "/**",
+      " *",
+      " * @author algori07",
+      " */"
+     ],
+     "anchor": "public class Record implements Serializable {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 16,
+     "end_line": 16,
+     "stripped_line": 8,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization"
+     ],
+     "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
+     "anchor": "private static final long serialVersionUID = 1L;",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/RecordFilter.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 9,
+     "end_line": 12,
+     "stripped_line": 5,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class RecordFilter{",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 16,
+     "end_line": 16,
+     "stripped_line": 8,
+     "text": [
+      "    // only search by keyword when patientId is null"
+     ],
+     "anchor": "private String patientNameKeyword = null;",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/RecordStatus.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public enum RecordStatus {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 2,
+     "line": 14,
+     "end_line": 14,
+     "stripped_line": 6,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 2): bỏ hai trạng thái CALLED và CANCELLED vì không có thao tác nào đặt ra chúng"
+     ],
+     "original": "    DONE //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ hai trạng thái CALLED và CANCELLED vì không có thao tác nào đặt ra chúng",
+     "anchor": "DONE",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/Role.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public enum Role {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/User.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 9,
+     "end_line": 12,
+     "stripped_line": 5,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public abstract class User implements Serializable {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 13,
+     "end_line": 13,
+     "stripped_line": 5,
+     "text": [
+      "//abstract class, phải chọn luôn một vị trí chức vụ. //có điều chỉnh với cách viết ban đầu: thêm implements Serializable"
+     ],
+     "original": "public abstract class User implements Serializable { //abstract class, phải chọn luôn một vị trí chức vụ. //có điều chỉnh với cách viết ban đầu: thêm implements Serializable",
+     "anchor": "public abstract class User implements Serializable {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 14,
+     "end_line": 14,
+     "stripped_line": 6,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization"
+     ],
+     "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
+     "anchor": "private static final long serialVersionUID = 1L;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 30,
+     "end_line": 30,
+     "stripped_line": 22,
+     "text": [
+      "    //Get"
+     ],
+     "anchor": "public String getId(){",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 49,
+     "end_line": 49,
+     "stripped_line": 40,
+     "text": [
+      "    //Set"
+     ],
+     "anchor": "public void setUserName(String userName){",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/model/VisitSegment.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package model;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 10,
+     "end_line": 13,
+     "stripped_line": 6,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class VisitSegment implements Serializable {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 15,
+     "end_line": 15,
+     "stripped_line": 7,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization"
+     ],
+     "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
+     "anchor": "private static final long serialVersionUID = 1L;",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/service/AuthService.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package service;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 1,
+     "line": 19,
+     "end_line": 24,
+     "stripped_line": 15,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " *",
+      " * //có điều chỉnh với cách viết ban đầu: refactor theo hợp đồng A5 (xem từng chỗ ghi chú bên dưới).",
+      " */"
+     ],
+     "anchor": "public class AuthService {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 26,
+     "end_line": 26,
+     "stripped_line": 16,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm final, loadData dùng clear()+addAll()"
+     ],
+     "original": "    private final List<User> _userList; //có điều chỉnh với cách viết ban đầu: thêm final, loadData dùng clear()+addAll()",
+     "anchor": "private final List<User> _userList;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 29,
+     "end_line": 29,
+     "stripped_line": 19,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: trước là AuthService() không tham số"
+     ],
+     "original": "    public AuthService(DepartmentService departmentService){ //có điều chỉnh với cách viết ban đầu: trước là AuthService() không tham số",
+     "anchor": "public AuthService(DepartmentService departmentService){",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 69,
+     "end_line": 69,
+     "stripped_line": 59,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ kiểm tra ký tự '|' (chỉ cần cho file txt cũ)"
+     ],
+     "anchor": "return value.trim();",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 79,
+     "end_line": 79,
+     "stripped_line": 68,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu: trước đây trả null khi thiếu dữ liệu / trùng userName; nay ném exception theo A1"
+     ],
+     "anchor": "if (role == null) {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 93,
+     "end_line": 93,
+     "stripped_line": 81,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2): ID của tài khoản chính là username (không đổi sau khi tạo) thay cho USR-tên-số"
+     ],
+     "anchor": "String id = cleanUserName;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 95,
+     "end_line": 95,
+     "stripped_line": 82,
+     "text": [
+      "        // isActive = true: //có điều chỉnh với cách viết ban đầu: trước là false nên tài khoản mới tạo bị coi như đã khóa"
+     ],
+     "anchor": "switch (role){",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 113,
+     "end_line": 115,
+     "stripped_line": 99,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu: trước trả null khi sai thông tin và tự gọi u.setActivate(true) (login vô tình mở khóa tài khoản).",
+      "    // Nay: không tự kích hoạt; tài khoản bị khóa và sai thông tin ném AuthenticationException với message khác nhau.",
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): tách riêng thông báo \"tài khoản không tồn tại\" và \"sai mật khẩu\""
+     ],
+     "anchor": "public User login(String userName, String password) throws AuthenticationException{",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 134,
+     "end_line": 134,
+     "stripped_line": 117,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu: trước trả boolean; nay void và ném NotFoundException / InvalidInputException"
+     ],
+     "anchor": "public void updateAccount(String userName, String newFullName) throws NotFoundException, InvalidInputException",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 0,
+     "line": 136,
+     "end_line": 136,
+     "stripped_line": 118,
+     "text": [
+      "//Chỉ được update tên thôi sao?"
+     ],
+     "original": "    { //Chỉ được update tên thôi sao?",
+     "anchor": "{",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 144,
+     "end_line": 144,
+     "stripped_line": 126,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu: đổi tên deActivateAccount -> deactivateAccount, trả void, ném NotFoundException"
+     ],
+     "anchor": "public void deactivateAccount(String userName) throws NotFoundException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 200,
+     "end_line": 200,
+     "stripped_line": 181,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ bộ đếm _idCounter vì ID tài khoản là username"
+     ],
+     "anchor": "public void loadData(List<User> list) {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/service/DepartmentService.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 21,
+     "end_line": 21,
+     "stripped_line": 21,
+     "text": [
+      "    // Hàm tìm kiếm dùng chung nội bộ: không thấy -> null (không ném lỗi)"
+     ],
+     "anchor": "public Department findById(String id) {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 52,
+     "end_line": 52,
+     "stripped_line": 51,
+     "text": [
+      "    // Kiểm tra tên hợp lệ, trả về tên đã trim. Dùng chung cho add và update."
+     ],
+     "anchor": "private String checkName(String name) throws InvalidInputException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 57,
+     "end_line": 57,
+     "stripped_line": 55,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ kiểm tra ký tự '|' (chỉ cần cho file txt cũ); thêm cấm '?' và \"0\" vì dùng để tìm kiếm / hủy khi chọn theo tên"
+     ],
+     "anchor": "if (name.contains(\"?\") || name.trim().equals(\"0\")) {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 68,
+     "end_line": 68,
+     "stripped_line": 65,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2): trước so equalsIgnoreCase; nay so theo tên đã chuẩn hóa (bỏ dấu, khoảng trắng, hoa/thường)"
+     ],
+     "anchor": "if (findByName(cleanName) != null) {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 74,
+     "end_line": 74,
+     "stripped_line": 70,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2): ID ẩn dạng dep-N (chữ thường, không nhúng tên khoa)"
+     ],
+     "anchor": "String newId = \"dep-\" + _idCounter;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 119,
+     "end_line": 119,
+     "stripped_line": 114,
+     "text": [
+      "    // Nạp từ file: list là final nên dùng clear() + addAll()"
+     ],
+     "anchor": "public void loadData(List<Department> list) {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 0,
+     "line": 128,
+     "end_line": 128,
+     "stripped_line": 122,
+     "text": [
+      "// danh sách rỗng -> max = 0 -> counter = 1"
+     ],
+     "original": "        _idCounter = max + 1;   // danh sách rỗng -> max = 0 -> counter = 1",
+     "anchor": "_idCounter = max + 1;",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/service/ExaminationService.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package service;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 16,
+     "end_line": 19,
+     "stripped_line": 12,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class ExaminationService {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/service/PatientService.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package service;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 16,
+     "end_line": 19,
+     "stripped_line": 12,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class PatientService {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 69,
+     "end_line": 69,
+     "stripped_line": 61,
+     "text": [
+      "    // Kiểm tra tên hợp lệ, trả về tên đã trim. Dùng chung cho register và update."
+     ],
+     "anchor": "private String checkName(String name) throws InvalidInputException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 74,
+     "end_line": 74,
+     "stripped_line": 65,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ kiểm tra ký tự '|' (chỉ cần cho file txt cũ); thêm cấm '?' và \"0\" vì dùng để tìm kiếm / hủy khi chọn theo tên"
+     ],
+     "anchor": "if (name.contains(\"?\") || name.trim().equals(\"0\")) {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 93,
+     "end_line": 93,
+     "stripped_line": 83,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): thêm tham số dateOfBirth (có thể null); ID ẩn dạng pat-N không nhúng tên bệnh nhân"
+     ],
+     "anchor": "public String register(String name, LocalDate dateOfBirth) throws InvalidInputException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 138,
+     "end_line": 138,
+     "stripped_line": 127,
+     "text": [
+      "        // So sánh không dấu, không phân biệt hoa/thường: \"van\" tìm được \"Nguyễn Văn A\"."
+     ],
+     "anchor": "String cleanKeyword = TextUtils.cleanName(keyword);",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 164,
+     "end_line": 164,
+     "stripped_line": 152,
+     "text": [
+      "    // Nạp dữ liệu từ file, rồi đặt _idCounter = số lớn nhất ở đuôi ID + 1."
+     ],
+     "anchor": "public void loadData(List<Patient> list) {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/service/QueueService.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package service;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 11,
+     "end_line": 14,
+     "stripped_line": 7,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class QueueService {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/service/RecordService.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package service;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 13,
+     "end_line": 16,
+     "stripped_line": 9,
+     "text": [
+      "/**",
+      " *",
+      " * @author algori07",
+      " */"
+     ],
+     "anchor": "public class RecordService {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 109,
+     "end_line": 109,
+     "stripped_line": 101,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): thêm quy tắc mỗi bệnh nhân chỉ có một lượt khám đang mở; ID lượt khám ẩn dạng vis-N; thông báo lỗi dùng tên thay cho ID"
+     ],
+     "anchor": "public String register(",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 149,
+     "end_line": 149,
+     "stripped_line": 140,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): thông báo lỗi không còn nhắc ID lượt khám"
+     ],
+     "anchor": "public void updateStatus(String recordId, RecordStatus newStatus)",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 162,
+     "end_line": 164,
+     "stripped_line": 152,
+     "text": [
+      "        // có điều chỉnh với cách viết ban đầu: đồng bộ Department.waitingQueue với trạng thái.",
+      "        // Bản đầu chỉ thêm recordId vào hàng chờ khi check-in mà không bao giờ xóa, nên DoctorMenu",
+      "        // hiển thị \"Pending queue\" sai (đếm cả bệnh nhân đã khám xong)."
+     ],
+     "anchor": "Department dept = this.departmentService.findById(record.getCurrentDepartmentId());",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 215,
+     "end_line": 215,
+     "stripped_line": 202,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: hợp đồng A5 quy định filter null -> trả toàn bộ (trước đây trả list rỗng)"
+     ],
+     "original": "        if(filter == null) return new ArrayList<>(this.recordList); //có điều chỉnh với cách viết ban đầu: hợp đồng A5 quy định filter null -> trả toàn bộ (trước đây trả list rỗng)",
+     "anchor": "if(filter == null) return new ArrayList<>(this.recordList);",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 291,
+     "end_line": 291,
+     "stripped_line": 278,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: chấp nhận list null"
+     ],
+     "original": "        if(list != null) this.recordList.addAll(list); //có điều chỉnh với cách viết ban đầu: chấp nhận list null",
+     "anchor": "if(list != null) this.recordList.addAll(list);",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 293,
+     "end_line": 295,
+     "stripped_line": 280,
+     "text": [
+      "        // //có điều chỉnh với cách viết ban đầu: bản đầu đặt idCounter = maxId (không +1) nên Record mới sau khi nạp file",
+      "        // bị TRÙNG ID với Record cuối cùng; Integer.parseInt cũng ném NumberFormatException nếu ID lạ.",
+      "        // Nay dùng TextUtils.extractCounter (an toàn) và cộng thêm 1 theo quy ước A4."
+     ],
+     "anchor": "int maxId = 0;",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/strategy/FCFSStrategy.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package strategy;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 10,
+     "end_line": 13,
+     "stripped_line": 6,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class FCFSStrategy implements QueueStrategy {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/strategy/PriorityStrategy.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package strategy;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 9,
+     "end_line": 12,
+     "stripped_line": 5,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class PriorityStrategy implements QueueStrategy {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/strategy/QueueStrategy.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template",
+      " */"
+     ],
+     "anchor": "package strategy;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 9,
+     "end_line": 12,
+     "stripped_line": 5,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public interface QueueStrategy {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/ui/AccountMenu.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package ui;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 20,
+     "end_line": 23,
+     "stripped_line": 16,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class AccountMenu {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 32,
+     "end_line": 32,
+     "stripped_line": 24,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): thêm recordService và currentUser để kiểm tra khi xóa tài khoản"
+     ],
+     "anchor": "public AccountMenu(AuthService au, DepartmentService de, RecordService re, User currentUser){",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 53,
+     "end_line": 53,
+     "stripped_line": 44,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): thêm Reactivate account và Delete account"
+     ],
+     "anchor": "private void printMenu() {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 81,
+     "end_line": 81,
+     "stripped_line": 71,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): thông báo dùng họ tên và username thay cho ID"
+     ],
+     "anchor": "private void createAccount() throws InvalidInputException, DuplicateDataException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 101,
+     "end_line": 101,
+     "stripped_line": 90,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột ID, hiện tên khoa thay cho mã khoa"
+     ],
+     "anchor": "private void listAccounts() {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 125,
+     "end_line": 125,
+     "stripped_line": 113,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): chọn tài khoản theo username (gõ ? để tìm) thay cho nhập ID"
+     ],
+     "anchor": "private void updateFullName() throws InvalidInputException, NotFoundException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 136,
+     "end_line": 136,
+     "stripped_line": 123,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): chọn tài khoản theo username; chặn khóa lại tài khoản đã khóa"
+     ],
+     "anchor": "private void deactivateAccount() throws InvalidInputException, NotFoundException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 206,
+     "end_line": 206,
+     "stripped_line": 192,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): chọn bác sĩ và khoa theo tên thay cho nhập ID"
+     ],
+     "anchor": "private void assignDoctor() throws InvalidInputException, NotFoundException {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/ui/AdminMenu.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 31,
+     "end_line": 31,
+     "stripped_line": 31,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): thêm recordService, currentUser (cho kiểm tra khi xóa) và onStrategyChanged (lưu ngay chiến lược hàng đợi)"
+     ],
+     "anchor": "public AdminMenu(DepartmentService departmentService,",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 107,
+     "end_line": 107,
+     "stripped_line": 106,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): thông báo dùng tên khoa thay cho ID"
+     ],
+     "anchor": "private void addDepartment() throws InvalidInputException, DuplicateDataException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 114,
+     "end_line": 114,
+     "stripped_line": 112,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): chọn khoa theo tên (gõ ? để tìm) thay cho nhập ID; thông báo dùng tên"
+     ],
+     "anchor": "private void updateDepartment()",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 127,
+     "end_line": 127,
+     "stripped_line": 124,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): chọn khoa theo tên; không cho xóa khoa còn bác sĩ hoặc đã có lượt khám; hỏi xác nhận"
+     ],
+     "anchor": "private void removeDepartment() throws NotFoundException, InvalidInputException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 150,
+     "end_line": 150,
+     "stripped_line": 146,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột ID, thêm số bác sĩ và số người đang chờ"
+     ],
+     "anchor": "private void viewDepartments() {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 170,
+     "end_line": 170,
+     "stripped_line": 165,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): gọi onStrategyChanged để lưu ngay chiến lược hàng đợi"
+     ],
+     "anchor": "private void switchStrategy() throws InvalidInputException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 185,
+     "end_line": 185,
+     "stripped_line": 179,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): đổi nhãn: số liệu là số lượt khám hiện đang ở từng trạng thái"
+     ],
+     "anchor": "private void viewStatistics() {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/ui/ConsoleIO.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package ui;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 16,
+     "end_line": 19,
+     "stripped_line": 12,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class ConsoleIO {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 0,
+     "line": 21,
+     "end_line": 21,
+     "stripped_line": 13,
+     "text": [
+      "//static có nghĩa là chỉ có 1, tạo nhiều biến class thì cũng chỉ có một cái này, ngoài ra thì void mà có static thì không cần khởi tạo một biến class để sử dụng mà có thể truy cập trực tiếp."
+     ],
+     "original": "    private static final Scanner SC = new Scanner(System.in); //static có nghĩa là chỉ có 1, tạo nhiều biến class thì cũng chỉ có một cái này, ngoài ra thì void mà có static thì không cần khởi tạo một biến class để sử dụng mà có thể truy cập trực tiếp.",
+     "anchor": "private static final Scanner SC = new Scanner(System.in);",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 0,
+     "line": 23,
+     "end_line": 23,
+     "stripped_line": 15,
+     "text": [
+      "//Tại sao cái này chỉ có private nhỉ?"
+     ],
+     "original": "    private ConsoleIO(){} //Tại sao cái này chỉ có private nhỉ?",
+     "anchor": "private ConsoleIO(){}",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 30,
+     "end_line": 30,
+     "stripped_line": 22,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): đổi thẻ [OK] [ERROR] [INFO] thành [Success] [Error] [Info], thêm [Warning]"
+     ],
+     "anchor": "public static void success(String msg) {System.out.println(\"[Success] \"+msg);}",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 0,
+     "line": 61,
+     "end_line": 61,
+     "stripped_line": 52,
+     "text": [
+      "//TODO: check lại chỗ này có cần thiết không? "
+     ],
+     "original": "        System.out.print(prompt); //TODO: check lại chỗ này có cần thiết không? ",
+     "anchor": "System.out.print(prompt);",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 0,
+     "line": 108,
+     "end_line": 108,
+     "stripped_line": 99,
+     "text": [
+      "// Cách để căn lề trái."
+     ],
+     "original": "            sb.append(\"| \").append(String.format(\"%-\" + width[i] + \"s\", cell)).append(' ');// Cách để căn lề trái.",
+     "anchor": "sb.append(\"| \").append(String.format(\"%-\" + width[i] + \"s\", cell)).append(' ');",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 114,
+     "end_line": 114,
+     "stripped_line": 105,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: trước đây tạo thêm 1 Scanner mới trên System.in, hai Scanner cùng đọc một luồng nhập sẽ làm mất / lệch dữ liệu nhập."
+     ],
+     "original": "        SC.nextLine(); //có điều chỉnh với cách viết ban đầu: trước đây tạo thêm 1 Scanner mới trên System.in, hai Scanner cùng đọc một luồng nhập sẽ làm mất / lệch dữ liệu nhập.",
+     "anchor": "SC.nextLine();",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/ui/DoctorMenu.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package ui;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 18,
+     "end_line": 21,
+     "stripped_line": 14,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class DoctorMenu {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 77,
+     "end_line": 77,
+     "stripped_line": 70,
+     "text": [
+      "        //// CONTEXT INFORMATION"
+     ],
+     "anchor": "System.out.println();",
+     "occurrence": 1,
+     "gap": 1
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 79,
+     "end_line": 79,
+     "stripped_line": 70,
+     "text": [
+      "        // warning"
+     ],
+     "anchor": "System.out.println();",
+     "occurrence": 1,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 81,
+     "end_line": 81,
+     "stripped_line": 71,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2): cảnh báo đi qua ConsoleIO.warning thay cho (!) tự in; sửa lỗi chính tả \"infomation\""
+     ],
+     "anchor": "if(!isValidDoctor())",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 93,
+     "end_line": 93,
+     "stripped_line": 82,
+     "text": [
+      "        // information"
+     ],
+     "anchor": "System.out.println(\"Username: \" + doctor.getUserName());",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 2,
+     "line": 94,
+     "end_line": 94,
+     "stripped_line": 82,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 2): hiện username thay cho Id"
+     ],
+     "original": "        System.out.println(\"Username: \" + doctor.getUserName()); //có điều chỉnh với cách viết ban đầu (đợt 2): hiện username thay cho Id",
+     "anchor": "System.out.println(\"Username: \" + doctor.getUserName());",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 107,
+     "end_line": 107,
+     "stripped_line": 95,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm kiểm tra null, trước đây record/patient null gây NullPointerException làm thoát chương trình"
+     ],
+     "original": "            if(record == null) //có điều chỉnh với cách viết ban đầu: thêm kiểm tra null, trước đây record/patient null gây NullPointerException làm thoát chương trình",
+     "anchor": "if(record == null)",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 2,
+     "line": 116,
+     "end_line": 116,
+     "stripped_line": 104,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 2): định dạng HH:mm dd/MM/yyyy"
+     ],
+     "original": "                System.out.println(\"Patient's visit time: \" + ConsoleIO.formatDateTime(record.getVisitTime())); //có điều chỉnh với cách viết ban đầu (đợt 2): định dạng HH:mm dd/MM/yyyy",
+     "anchor": "System.out.println(\"Patient's visit time: \" + ConsoleIO.formatDateTime(record.getVisitTime()));",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 122,
+     "end_line": 122,
+     "stripped_line": 110,
+     "text": [
+      "        // menu"
+     ],
+     "anchor": "if(isValidDoctor())",
+     "occurrence": 1,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 163,
+     "end_line": 163,
+     "stripped_line": 150,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: patient null (bệnh nhân đã bị xóa) -> hiện ID thay vì NullPointerException"
+     ],
+     "original": "                patient == null ? record.getPatientId() : patient.getName(), //có điều chỉnh với cách viết ban đầu: patient null (bệnh nhân đã bị xóa) -> hiện ID thay vì NullPointerException",
+     "anchor": "patient == null ? record.getPatientId() : patient.getName(),",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 164,
+     "end_line": 164,
+     "stripped_line": 151,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: thêm cột Priority theo phân công (cần để thấy thứ tự khi dùng Priority strategy)"
+     ],
+     "original": "                record.getPriority().toString(), //có điều chỉnh với cách viết ban đầu: thêm cột Priority theo phân công (cần để thấy thứ tự khi dùng Priority strategy)",
+     "anchor": "record.getPriority().toString(),",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 2,
+     "line": 165,
+     "end_line": 165,
+     "stripped_line": 152,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột Record Id; giờ khám định dạng HH:mm dd/MM/yyyy"
+     ],
+     "original": "                ConsoleIO.formatDateTime(record.getVisitTime()) //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột Record Id; giờ khám định dạng HH:mm dd/MM/yyyy",
+     "anchor": "ConsoleIO.formatDateTime(record.getVisitTime())",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 169,
+     "end_line": 169,
+     "stripped_line": 156,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: hàng chờ rỗng -> báo thay vì in bảng trống"
+     ],
+     "original": "        if(rows.isEmpty()) //có điều chỉnh với cách viết ban đầu: hàng chờ rỗng -> báo thay vì in bảng trống",
+     "anchor": "if(rows.isEmpty())",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 177,
+     "end_line": 178,
+     "stripped_line": 164,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu: ExaminationService.callNext trả null khi hàng chờ rỗng (hợp đồng A5), không ném NotFoundException;",
+      "    // và cần in kết quả khi gọi thành công. Bỏ pauseConsole() vì không còn cần dừng màn hình."
+     ],
+     "anchor": "private void callNextPatient()",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 2,
+     "line": 189,
+     "end_line": 189,
+     "stripped_line": 174,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 2): bỏ ID lượt khám khỏi thông báo"
+     ],
+     "original": "                        + \" (\" + called.getPriority() + \")\"); //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ ID lượt khám khỏi thông báo",
+     "anchor": "+ \" (\" + called.getPriority() + \")\");",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 200,
+     "end_line": 200,
+     "stripped_line": 185,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: lưu lại ID để in thông báo thành công"
+     ],
+     "original": "            String recordId = doctor.getCurrentRecordId(); //có điều chỉnh với cách viết ban đầu: lưu lại ID để in thông báo thành công",
+     "anchor": "String recordId = doctor.getCurrentRecordId();",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 2,
+     "line": 206,
+     "end_line": 206,
+     "stripped_line": 191,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 2): thông báo dùng tên bệnh nhân thay cho ID"
+     ],
+     "original": "            String patientName = examinedPatient == null ? \"the patient\" : examinedPatient.getName(); //có điều chỉnh với cách viết ban đầu (đợt 2): thông báo dùng tên bệnh nhân thay cho ID",
+     "anchor": "String patientName = examinedPatient == null ? \"the patient\" : examinedPatient.getName();",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 221,
+     "end_line": 221,
+     "stripped_line": 206,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ mục \"Search by id\" vì ID lượt khám không còn hiện ra; các mục còn lại được đánh số lại"
+     ],
+     "anchor": "System.out.println(\"1. Search by patient name\");",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 2,
+     "line": 334,
+     "end_line": 334,
+     "stripped_line": 318,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 2): ngày nhập theo dd/MM/yyyy, dùng chung ConsoleIO.parseDate"
+     ],
+     "original": "        return ConsoleIO.parseDate(value).atStartOfDay(); //có điều chỉnh với cách viết ban đầu (đợt 2): ngày nhập theo dd/MM/yyyy, dùng chung ConsoleIO.parseDate",
+     "anchor": "return ConsoleIO.parseDate(value).atStartOfDay();",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 2,
+     "line": 362,
+     "end_line": 362,
+     "stripped_line": 346,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột Record ID; hiện tên khoa thay cho mã khoa; giờ khám định dạng dễ đọc"
+     ],
+     "original": "                department == null ? record.getCurrentDepartmentId() : department.getName() //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột Record ID; hiện tên khoa thay cho mã khoa; giờ khám định dạng dễ đọc",
+     "anchor": "department == null ? record.getCurrentDepartmentId() : department.getName()",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/ui/Main.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package ui;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class Main {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "adjustment",
+     "round": 1,
+     "line": 13,
+     "end_line": 13,
+     "stripped_line": 5,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu: trước đây chỉ là System.out.println(\"Ok\") (bản khung)"
+     ],
+     "original": "        new MainMenu().start(); //có điều chỉnh với cách viết ban đầu: trước đây chỉ là System.out.println(\"Ok\") (bản khung)",
+     "anchor": "new MainMenu().start();",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/ui/MainMenu.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package ui;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 34,
+     "end_line": 37,
+     "stripped_line": 30,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class MainMenu {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 74,
+     "end_line": 74,
+     "stripped_line": 66,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): hỏi username trước và báo ngay nếu tài khoản không tồn tại; lời chào bỏ thẻ [OK] và vai trò"
+     ],
+     "anchor": "private boolean loginOnce() {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 132,
+     "end_line": 132,
+     "stripped_line": 123,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): nạp thêm settings.dat (chiến lược hàng đợi và bộ đếm ID)"
+     ],
+     "anchor": "private void loadAll() {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 187,
+     "end_line": 187,
+     "stripped_line": 177,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): lưu thêm settings.dat"
+     ],
+     "anchor": "private void saveAll() {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/ui/ReceptionistMenu.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package ui;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 24,
+     "end_line": 27,
+     "stripped_line": 20,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class ReceptionistMenu {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 54,
+     "end_line": 54,
+     "stripped_line": 46,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): gộp đăng ký bệnh nhân và check-in thành mục \"New visit\"; mục đăng ký riêng vẫn giữ để đăng ký trước"
+     ],
+     "anchor": "private void printMenu() {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 81,
+     "end_line": 81,
+     "stripped_line": 72,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): hỏi thêm ngày sinh (không bắt buộc); thông báo dùng tên và mã bệnh nhân"
+     ],
+     "anchor": "private void registerPatient() throws InvalidInputException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 94,
+     "end_line": 94,
+     "stripped_line": 84,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): chọn bệnh nhân theo tên hoặc mã (gõ ? để tìm), cho sửa cả ngày sinh"
+     ],
+     "anchor": "private void updatePatient() throws InvalidInputException, NotFoundException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 116,
+     "end_line": 116,
+     "stripped_line": 105,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): chọn theo tên, hỏi xác nhận, không cho xóa bệnh nhân đã có lượt khám"
+     ],
+     "anchor": "private void removePatient() throws InvalidInputException, NotFoundException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 135,
+     "end_line": 135,
+     "stripped_line": 123,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột ID, thay bằng mã bệnh nhân, thêm ngày sinh và số lượt khám"
+     ],
+     "anchor": "private void printPatients(List<Patient> patients) {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 165,
+     "end_line": 166,
+     "stripped_line": 152,
+     "text": [
+      "    // Việc kiểm tra patient/department tồn tại nằm trong RecordService -> để NotFoundException nổi lên.",
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): thay cho checkIn() cũ; chọn bệnh nhân và khoa theo tên, tự đăng ký bệnh nhân nếu chưa có"
+     ],
+     "anchor": "private void newVisit() throws InvalidInputException, NotFoundException, DuplicateDataException {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 203,
+     "end_line": 203,
+     "stripped_line": 188,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột Record ID, hiện thêm giờ khám theo định dạng dễ đọc; danh sách trạng thái chỉ còn 3 giá trị"
+     ],
+     "anchor": "private void searchRecords() {",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "note",
+     "round": 0,
+     "line": 206,
+     "end_line": 206,
+     "stripped_line": 190,
+     "text": [
+      "        // Keyword rỗng -> searchByName trả toàn bộ bệnh nhân -> lấy toàn bộ record."
+     ],
+     "anchor": "filter.setPatientNameKeyword(ConsoleIO.readLine(\"Patient name keyword (Enter to skip): \"));",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  },
+  "src/util/TextUtils.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "license",
+     "round": 0,
+     "line": 1,
+     "end_line": 4,
+     "stripped_line": 1,
+     "text": [
+      "/*",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license",
+      " * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template",
+      " */"
+     ],
+     "anchor": "package util;",
+     "occurrence": 0,
+     "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 7,
+     "end_line": 10,
+     "stripped_line": 3,
+     "text": [
+      "/**",
+      " *",
+      " * @author ACER",
+      " */"
+     ],
+     "anchor": "public class TextUtils {",
+     "occurrence": 0,
+     "gap": 0
+    }
+   ]
+  }
+ }
+}

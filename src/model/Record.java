@@ -1,18 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/**
- *
- * @author algori07
- */
 public class Record implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final String id;
     private final String patientId;
     

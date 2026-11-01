@@ -1,47 +1,18 @@
 package data;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 import model.Department;
 
-public class DepartmentData { //Repo liên quan đến nhập xuất... File I/O
+public class DepartmentData {
 
-    private static final String DIR = "data";
-    private static final String FILE_PATH = "data/departments.txt";
+    private static final String FILE_NAME = "departments.dat";
 
     public void save(List<Department> list) throws IOException {
-        new File(DIR).mkdirs();
-        File file = new File(FILE_PATH);
-        try (BufferedWriter w = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
-            for (Department d : list) {
-                w.write(String.join("|", d.getId(), d.getName()));
-                w.newLine();
-            }
-        }
+        SerialStorage.saveList(FILE_NAME, list);
     }
 
     public List<Department> load() throws IOException {
-        List<Department> result = new ArrayList<>();
-        File file = new File(FILE_PATH);
-        if (!file.exists()) {
-            return result;
-        }
-        try (BufferedReader r = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
-            String line;
-            while ((line = r.readLine()) != null) {
-                String[] p = line.split("\\|", -1);
-                if (p.length < 2) {
-                    continue;
-                }
-                result.add(new Department(p[0], p[1]));
-            }
-        }
-        return result;
+        return SerialStorage.loadList(FILE_NAME, Department.class);
     }
 }

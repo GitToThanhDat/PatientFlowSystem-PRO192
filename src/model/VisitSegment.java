@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
-/**
- *
- * @author ACER
- */
 public class VisitSegment implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String departmentId;
     private String doctorId;
     private String examResults;

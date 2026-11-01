@@ -1,14 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author ACER
- */
-public class User { //abstract class, phải chọn luôn một vị trí chức vụ. 
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String id;
     private Role role;
     private String userName;
@@ -24,7 +19,6 @@ public class User { //abstract class, phải chọn luôn một vị trí chức
         this.role=role;
         this.userName=userName;
     }
-    //Get
     public String getId(){
         return this.id;
     }
@@ -43,7 +37,6 @@ public class User { //abstract class, phải chọn luôn một vị trí chức
     public boolean isActivate(){
         return this.isActivate;
     }
-    //Set
     public void setUserName(String userName){
         this.userName=userName;
     }

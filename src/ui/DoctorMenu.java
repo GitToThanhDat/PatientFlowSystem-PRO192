@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ui;
 
 import model.Doctor;
@@ -11,16 +7,10 @@ import service.RecordService;
 import java.io.*;
 import exception.*;
 import java.util.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import model.*;
 import service.*;
 
-/**
- *
- * @author ACER
- */
 public class DoctorMenu {
     private final static int MAX = 4;
     
@@ -76,23 +66,20 @@ public class DoctorMenu {
         System.out.println();
         System.out.println("===== DOCTOR MENU =====");
         
-        //// CONTEXT INFORMATION
         
-        // warning
         System.out.println();
         if(!isValidDoctor())
         {
-            System.out.println("(!) You are currently not in any department!");
-            System.out.println("(!) Contact your admin for more infomation!");
+            ConsoleIO.warning("You are currently not in any department!");
+            ConsoleIO.warning("Contact your admin for more information!");
         }
         else if(!isValidDepartment())
         {
-            System.out.println("(!) The department you are in is not found!");
-            System.out.println("(!) Contact your admin for more infomation!");
+            ConsoleIO.warning("The department you are in is not found!");
+            ConsoleIO.warning("Contact your admin for more information!");
         }
         
-        // information
-        System.out.println("Id: " + doctor.getId());
+        System.out.println("Username: " + doctor.getUserName());
         System.out.println("Name: " + doctor.getFullName());
         if(isValidDepartment())
         {
@@ -104,15 +91,22 @@ public class DoctorMenu {
         if(isExamining())
         {
             Record record = recordService.findById(doctor.getCurrentRecordId());
-            Patient patient = patientService.findById(record.getPatientId());
             System.out.println();
-            System.out.println("Current examining patient: " + patient.getName());
-            System.out.println("Patient's visit time: " + record.getVisitTime());
+            if(record == null)
+            {
+                ConsoleIO.warning("The record you were examining was not found!");
+            }
+            else
+            {
+                Patient patient = patientService.findById(record.getPatientId());
+                System.out.println("Current examining patient: "
+                        + (patient == null ? record.getPatientId() : patient.getName()));
+                System.out.println("Patient's visit time: " + ConsoleIO.formatDateTime(record.getVisitTime()));
+            }
         }
         
         System.out.println();
         
-        // menu
         if(isValidDoctor())
         {
             System.out.println("1. View waiting queue of my department");
@@ -153,24 +147,34 @@ public class DoctorMenu {
         {
             Patient patient = patientService.findById(record.getPatientId());
             rows.add(new String[]{
-                record.getId(),
-                patient.getName(),
-                record.getVisitTime().toString()
+                patient == null ? record.getPatientId() : patient.getName(),
+                record.getPriority().toString(),
+                ConsoleIO.formatDateTime(record.getVisitTime())
             });
         }
         
-        ConsoleIO.printTable(new String[]{"Record Id", "Patient Name", "Visit Time"}, rows);
+        if(rows.isEmpty())
+        {
+            ConsoleIO.info("The waiting queue of your department is empty.");
+            return;
+        }
+        ConsoleIO.printTable(new String[]{"Patient Name", "Priority", "Visit Time"}, rows);
     }
     
     private void callNextPatient()
     {
         try{
-            examinationService.callNext(doctor);
-        } catch(InvalidInputException e) {
+            Record called = examinationService.callNext(doctor);
+            if(called == null) {
+                ConsoleIO.info("There is no patient waiting in your department.");
+            } else {
+                Patient patient = patientService.findById(called.getPatientId());
+                ConsoleIO.success("Now examining: "
+                        + (patient == null ? called.getPatientId() : patient.getName())
+                        + " (" + called.getPriority() + ")");
+            }
+        } catch(InvalidInputException | NotFoundException e) {
             ConsoleIO.error(e.getMessage());
-        } catch(NotFoundException e) {
-            System.out.println("There is no patient!");
-            ConsoleIO.pauseConsole();
         }
     }
     
@@ -178,8 +182,16 @@ public class DoctorMenu {
     {
         try
         {
+            String recordId = doctor.getCurrentRecordId();
+            if(recordId == null) {
+                throw new InvalidInputException("You are not examining any patient. Use option 2 to call one first.");
+            }
+            Record examined = recordService.findById(recordId);
+            Patient examinedPatient = examined == null ? null : patientService.findById(examined.getPatientId());
+            String patientName = examinedPatient == null ? "the patient" : examinedPatient.getName();
             String diagnosis = ConsoleIO.readLine("Diagnosis: ");
             examinationService.completeExamination(doctor, diagnosis);
+            ConsoleIO.success("Examination completed for " + patientName + ".");
         }
         catch(InvalidInputException|NotFoundException e)
         {
@@ -191,32 +203,19 @@ public class DoctorMenu {
     {
         System.out.println();
         System.out.println("===== SEARCH RECORDS =====");
-        System.out.println("1. Search by id");
-        System.out.println("2. Search by patient name");
-        System.out.println("3. Search by visit date");
-        System.out.println("4. Search by status");
-        System.out.println("5. Advanced Search");
+        System.out.println("1. Search by patient name");
+        System.out.println("2. Search by visit date");
+        System.out.println("3. Search by status");
+        System.out.println("4. Advanced Search");
         System.out.println("0. Back");
 
         try
         {
-            int choice = ConsoleIO.readChoice("Choose: ", 0, 5);
+            int choice = ConsoleIO.readChoice("Choose: ", 0, 4);
             RecordFilter filter = new RecordFilter();
 
             switch (choice) {
                 case 1:
-                    String recordId = ConsoleIO.readLine("Record ID: ");
-                    if (recordId.isEmpty()) {
-                        throw new InvalidInputException("Record ID must not be empty.");
-                    }
-                    Record record = recordService.findById(recordId);
-                    List<Record> records = new ArrayList<>();
-                    if (record != null) {
-                        records.add(record);
-                    }
-                    printRecordResults(records);
-                    break;
-                case 2:
                     String patientName = ConsoleIO.readLine("Patient name: ");
                     if (patientName.isEmpty()) {
                         throw new InvalidInputException("Patient name must not be empty.");
@@ -224,15 +223,15 @@ public class DoctorMenu {
                     filter.setPatientNameKeyword(patientName);
                     printRecordResults(recordService.search(filter));
                     break;
-                case 3:
+                case 2:
                     filter.setVisitDate(readVisitDate());
                     printRecordResults(recordService.search(filter));
                     break;
-                case 4:
+                case 3:
                     filter.setStatus(readRecordStatus());
                     printRecordResults(recordService.search(filter));
                     break;
-                case 5:
+                case 4:
                     advancedSearch();
                     break;
                 default:
@@ -252,14 +251,18 @@ public class DoctorMenu {
             RecordFilter filter = new RecordFilter();
 
             System.out.println("Patient filter:");
-            System.out.println("1. Patient ID");
+            System.out.println("1. Patient code");
             System.out.println("2. Patient name");
             System.out.println("0. No patient filter");
             int patientChoice = ConsoleIO.readChoice("Choose: ", 0, 2);
             if (patientChoice == 1) {
-                String patientId = ConsoleIO.readLine("Patient ID: ");
-                if (!patientId.isEmpty()) {
-                    filter.setPatientId(patientId);
+                String patientCode = ConsoleIO.readLine("Patient code (for example pat-7): ");
+                if (!patientCode.isEmpty()) {
+                    Patient byCode = patientService.findByCode(patientCode);
+                    if (byCode == null) {
+                        throw new NotFoundException("Patient code '" + patientCode + "' was not found.");
+                    }
+                    filter.setPatientId(byCode.getId());
                 }
             } else if (patientChoice == 2) {
                 String patientName = ConsoleIO.readLine("Patient name: ");
@@ -268,7 +271,7 @@ public class DoctorMenu {
                 }
             }
 
-            String visitDate = ConsoleIO.readLine("Visit date (YYYY-MM-DD, blank to skip): ");
+            String visitDate = ConsoleIO.readLine("Visit date (dd/MM/yyyy, blank to skip): ");
             if (!visitDate.isEmpty()) {
                 filter.setVisitDate(parseVisitDate(visitDate));
             }
@@ -284,14 +287,18 @@ public class DoctorMenu {
                 filter.setStatus(statuses[statusChoice - 1]);
             }
 
-            String departmentId = ConsoleIO.readLine("Department ID (blank to skip): ");
-            if (!departmentId.isEmpty()) {
-                filter.setDepartmentId(departmentId);
+            String departmentName = ConsoleIO.readLine("Department name (blank to skip): ");
+            if (!departmentName.isEmpty()) {
+                Department byName = departmentService.findByName(departmentName);
+                if (byName == null) {
+                    throw new NotFoundException("The department '" + departmentName + "' was not found.");
+                }
+                filter.setDepartmentId(byName.getId());
             }
 
             printRecordResults(recordService.search(filter));
         }
-        catch (InvalidInputException e)
+        catch (InvalidInputException | NotFoundException e)
         {
             ConsoleIO.error(e.getMessage());
         }
@@ -299,16 +306,16 @@ public class DoctorMenu {
 
     private LocalDateTime readVisitDate() throws InvalidInputException
     {
-        return parseVisitDate(ConsoleIO.readLine("Visit date (YYYY-MM-DD): "));
+        String text = ConsoleIO.readLine("Visit date (dd/MM/yyyy): ");
+        if (text.isEmpty()) {
+            throw new InvalidInputException("Visit date must not be empty.");
+        }
+        return parseVisitDate(text);
     }
 
     private LocalDateTime parseVisitDate(String value) throws InvalidInputException
     {
-        try {
-            return LocalDate.parse(value).atStartOfDay();
-        } catch (DateTimeParseException e) {
-            throw new InvalidInputException("Invalid date. Please use YYYY-MM-DD.");
-        }
+        return ConsoleIO.parseDate(value).atStartOfDay();
     }
 
     private RecordStatus readRecordStatus() throws InvalidInputException
@@ -331,17 +338,17 @@ public class DoctorMenu {
         List<String[]> rows = new ArrayList<>();
         for (Record record : records) {
             Patient patient = patientService.findById(record.getPatientId());
+            Department department = departmentService.findById(record.getCurrentDepartmentId());
             rows.add(new String[]{
-                record.getId(),
                 patient == null ? record.getPatientId() : patient.getName(),
-                record.getVisitTime().toString(),
+                ConsoleIO.formatDateTime(record.getVisitTime()),
                 record.getStatus().toString(),
-                record.getCurrentDepartmentId()
+                department == null ? record.getCurrentDepartmentId() : department.getName()
             });
         }
 
         ConsoleIO.printTable(
-                new String[]{"Record ID", "Patient Name", "Visit Time", "Status", "Department ID"},
+                new String[]{"Patient Name", "Visit Time", "Status", "Department"},
                 rows);
     }
 }

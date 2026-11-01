@@ -18,7 +18,6 @@ public class DepartmentService {
         _idCounter = 1;
     }
 
-    // Hàm tìm kiếm dùng chung nội bộ: không thấy -> null (không ném lỗi)
     public Department findById(String id) {
         for (Department dept : _departmentList) {
             if (dept.getId().equals(id)) {
@@ -28,13 +27,33 @@ public class DepartmentService {
         return null;
     }
 
-    // Kiểm tra tên hợp lệ, trả về tên đã trim. Dùng chung cho add và update.
+    public Department findByName(String name) {
+        String key = TextUtils.cleanName(name);
+        for (Department dept : _departmentList) {
+            if (TextUtils.cleanName(dept.getName()).equals(key)) {
+                return dept;
+            }
+        }
+        return null;
+    }
+
+    public List<Department> searchByName(String keyword) {
+        String key = TextUtils.cleanName(keyword);
+        List<Department> result = new ArrayList<>();
+        for (Department dept : _departmentList) {
+            if (TextUtils.cleanName(dept.getName()).contains(key)) {
+                result.add(dept);
+            }
+        }
+        return result;
+    }
+
     private String checkName(String name) throws InvalidInputException {
         if (name == null || name.trim().isEmpty()) {
             throw new InvalidInputException("Department name must not be empty.");
         }
-        if (name.contains("|")) {
-            throw new InvalidInputException("Department name must not contain '|': " + name);
+        if (name.contains("?") || name.trim().equals("0")) {
+            throw new InvalidInputException("Department name must not contain '?' and must not be '0'.");
         }
         return name.trim();
     }
@@ -43,14 +62,12 @@ public class DepartmentService {
             throws InvalidInputException, DuplicateDataException {
         String cleanName = checkName(name);
 
-        for (Department dept : _departmentList) {
-            if (dept.getName().equalsIgnoreCase(cleanName)) {
-                throw new DuplicateDataException(
-                        "Department '" + cleanName + "' already exists.");
-            }
+        if (findByName(cleanName) != null) {
+            throw new DuplicateDataException(
+                    "Department '" + cleanName + "' already exists.");
         }
 
-        String newId = "DEPT-" + TextUtils.cleanName(cleanName) + "-" + _idCounter;
+        String newId = "dep-" + _idCounter;
         _departmentList.add(new Department(newId, cleanName));
         _idCounter++;
         return newId;
@@ -60,15 +77,14 @@ public class DepartmentService {
             throws NotFoundException, InvalidInputException, DuplicateDataException {
         Department dept = findById(id);
         if (dept == null) {
-            throw new NotFoundException("Department not found with ID: " + id);
+            throw new NotFoundException("Department not found.");
         }
         String cleanName = checkName(newName);
 
-        for (Department d : _departmentList) {
-            if (d != dept && d.getName().equalsIgnoreCase(cleanName)) {
-                throw new DuplicateDataException(
-                        "Department '" + cleanName + "' already exists.");
-            }
+        Department same = findByName(cleanName);
+        if (same != null && same != dept) {
+            throw new DuplicateDataException(
+                    "Department '" + cleanName + "' already exists.");
         }
         dept.setName(cleanName);
     }
@@ -76,7 +92,7 @@ public class DepartmentService {
     public void remove(String id) throws NotFoundException {
         Department dept = findById(id);
         if (dept == null) {
-            throw new NotFoundException("Department not found with ID: " + id);
+            throw new NotFoundException("Department not found.");
         }
         _departmentList.remove(dept);
     }
@@ -85,7 +101,16 @@ public class DepartmentService {
         return _departmentList;
     }
 
-    // Nạp từ file: list là final nên dùng clear() + addAll()
+    public int getNextNumber() {
+        return _idCounter;
+    }
+
+    public void ensureNextNumberAtLeast(int number) {
+        if (number > _idCounter) {
+            _idCounter = number;
+        }
+    }
+
     public void loadData(List<Department> list) {
         _departmentList.clear();
         _departmentList.addAll(list);
@@ -94,6 +119,6 @@ public class DepartmentService {
         for (Department d : _departmentList) {
             max = Math.max(max, TextUtils.extractCounter(d.getId()));
         }
-        _idCounter = max + 1;   // danh sách rỗng -> max = 0 -> counter = 1
+        _idCounter = max + 1;
     }
 }

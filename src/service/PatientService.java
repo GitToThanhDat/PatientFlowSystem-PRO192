@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +9,6 @@ import exception.NotFoundException;
 import model.Patient;
 import util.TextUtils;
 
-/**
- *
- * @author ACER
- */
 public class PatientService {
     private final List<Patient> _patientList;
     private int _idCounter;
@@ -39,23 +32,61 @@ public class PatientService {
         return null;
     }
 
-    // Kiểm tra tên hợp lệ, trả về tên đã trim. Dùng chung cho register và update.
+    public Patient findByCode(String code) {
+        if(code == null) {
+            return null;
+        }
+
+        for(Patient p : _patientList) {
+            if(p.getId().equalsIgnoreCase(code.trim())) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    public List<Patient> findByName(String name) {
+        String key = TextUtils.cleanName(name);
+        List<Patient> result = new ArrayList<>();
+        for (Patient p : _patientList) {
+            if (TextUtils.cleanName(p.getName()).equals(key)) {
+                result.add(p);
+            }
+        }
+
+        return result;
+    }
+
     private String checkName(String name) throws InvalidInputException {
         if (name == null || name.trim().isEmpty()) {
             throw new InvalidInputException("Patient name must not be empty.");
         }
-        if (name.contains("|")) {
-            throw new InvalidInputException("Patient name must not contain '|': " + name);
+        if (name.contains("?") || name.trim().equals("0")) {
+            throw new InvalidInputException("Patient name must not contain '?' and must not be '0'.");
         }
         return name.trim();
     }
 
-    public String register(String name) throws InvalidInputException {
-        String cleanName = checkName(name);
+    private void checkDateOfBirth(LocalDate dateOfBirth) throws InvalidInputException {
+        if (dateOfBirth == null) {
+            return;
+        }
+        if (dateOfBirth.isAfter(LocalDate.now())) {
+            throw new InvalidInputException("Date of birth must not be in the future.");
+        }
+        if (dateOfBirth.getYear() < 1900) {
+            throw new InvalidInputException("Date of birth must not be before 1900.");
+        }
+    }
 
-        String id = "PT-" + TextUtils.cleanName(cleanName) + "-" + _idCounter;
+    public String register(String name, LocalDate dateOfBirth) throws InvalidInputException {
+        String cleanName = checkName(name);
+        checkDateOfBirth(dateOfBirth);
+
+        String id = "pat-" + _idCounter;
         _idCounter++;
-        _patientList.add(new Patient(id, cleanName));
+        _patientList.add(new Patient(id, cleanName, dateOfBirth));
 
         return id;
     }
@@ -63,16 +94,26 @@ public class PatientService {
     public void update(String id, String newName) throws NotFoundException, InvalidInputException {
         Patient patient = findById(id);
         if (patient == null) {
-            throw new NotFoundException("Patient not found with ID: " + id);
+            throw new NotFoundException("Patient not found.");
         }
 
         patient.setName(checkName(newName));
     }
 
+    public void updateDateOfBirth(String id, LocalDate dateOfBirth) throws NotFoundException, InvalidInputException {
+        Patient patient = findById(id);
+        if (patient == null) {
+            throw new NotFoundException("Patient not found.");
+        }
+        checkDateOfBirth(dateOfBirth);
+
+        patient.setDateOfBirth(dateOfBirth);
+    }
+
     public void remove(String id) throws NotFoundException {
         Patient patient = findById(id);
         if (patient == null) {
-            throw new NotFoundException("Patient not found with ID: " + id);
+            throw new NotFoundException("Patient not found.");
         }
 
         _patientList.remove(patient);
@@ -83,7 +124,6 @@ public class PatientService {
             return new ArrayList<>(_patientList);
         }
 
-        // So sánh không dấu, không phân biệt hoa/thường: "van" tìm được "Nguyễn Văn A".
         String cleanKeyword = TextUtils.cleanName(keyword);
         List<Patient> result = new ArrayList<>();
         for (Patient p : _patientList) {
@@ -99,7 +139,16 @@ public class PatientService {
         return _patientList;
     }
 
-    // Nạp dữ liệu từ file, rồi đặt _idCounter = số lớn nhất ở đuôi ID + 1.
+    public int getNextNumber() {
+        return _idCounter;
+    }
+
+    public void ensureNextNumberAtLeast(int number) {
+        if (number > _idCounter) {
+            _idCounter = number;
+        }
+    }
+
     public void loadData(List<Patient> list) {
         _patientList.clear();
         if (list != null) {
