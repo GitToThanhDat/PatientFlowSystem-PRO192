@@ -1,9 +1,7 @@
 package model;
 
-import java.io.Serializable;
 
-public abstract class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class User {
     private String id;
     private Role role;
     private String userName;

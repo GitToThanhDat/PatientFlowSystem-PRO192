@@ -1,10 +1,8 @@
 package model;
 
-import java.io.Serializable;
 
-public class AppSettings implements Serializable {
+public class AppSettings {
 
-    private static final long serialVersionUID = 1L;
 
     private String queueStrategy = "FCFS";
     private int nextDepartmentNumber = 1;

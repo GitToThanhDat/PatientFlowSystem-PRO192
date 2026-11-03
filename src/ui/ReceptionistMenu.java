@@ -16,9 +16,10 @@ import model.RecordStatus;
 import service.DepartmentService;
 import service.PatientService;
 import service.RecordService;
+import util.DateUtils;
 
 public class ReceptionistMenu {
-    private static final int MAX_CHOICE = 7;
+    private static final int MAX_CHOICE = 6;
 
     private final PatientService _patientService;
     private final RecordService _recordService;
@@ -46,13 +47,12 @@ public class ReceptionistMenu {
     private void printMenu() {
         System.out.println();
         System.out.println("===== RECEPTIONIST MENU =====");
-        System.out.println("1. New visit (register patient if needed, then check-in)");
-        System.out.println("2. Register new patient only");
-        System.out.println("3. Update patient");
-        System.out.println("4. Remove patient");
-        System.out.println("5. Search patient by name");
-        System.out.println("6. View all patients");
-        System.out.println("7. Search visit records");
+        System.out.println("1. New visit (register patient and create visit record)");
+        System.out.println("2. Update patient");
+        System.out.println("3. Remove patient (only if never examined)");
+        System.out.println("4. Search patient by name");
+        System.out.println("5. View all patients");
+        System.out.println("6. Search visit records");
         System.out.println("0. Logout");
     }
 
@@ -60,25 +60,12 @@ public class ReceptionistMenu {
             throws InvalidInputException, NotFoundException, DuplicateDataException {
         switch (choice) {
             case 1: newVisit(); break;
-            case 2: registerPatient(); break;
-            case 3: updatePatient(); break;
-            case 4: removePatient(); break;
-            case 5: printPatients(_patientService.searchByName(ConsoleIO.readLine("Name keyword: "))); break;
-            case 6: printPatients(_patientService.getAll()); break;
-            case 7: searchRecords(); break;
+            case 2: updatePatient(); break;
+            case 3: removePatient(); break;
+            case 4: printPatients(_patientService.searchByName(ConsoleIO.readLine("Name keyword: "))); break;
+            case 5: printPatients(_patientService.getAll()); break;
+            case 6: searchRecords(); break;
         }
-    }
-
-    private void registerPatient() throws InvalidInputException {
-        String name = ConsoleIO.readLine("Patient name: ");
-        if (name.isEmpty()) {
-            throw new InvalidInputException("Patient name must not be empty.");
-        }
-        LocalDate dateOfBirth = ConsoleIO.parseDate(
-                ConsoleIO.readLine("Date of birth (dd/MM/yyyy, Enter to skip): "));
-        String id = _patientService.register(name, dateOfBirth);
-        Patient patient = _patientService.findById(id);
-        ConsoleIO.success("Patient registered: " + patient.getName() + " (code: " + id + ")");
     }
 
     private void updatePatient() throws InvalidInputException, NotFoundException {
@@ -88,7 +75,7 @@ public class ReceptionistMenu {
         }
         String newName = ConsoleIO.readLine("New name for '" + patient.getName() + "' (Enter to keep): ");
         String dobText = ConsoleIO.readLine("New date of birth (dd/MM/yyyy, Enter to keep): ");
-        LocalDate dateOfBirth = ConsoleIO.parseDate(dobText);
+        LocalDate dateOfBirth = DateUtils.parseDate(dobText);
         if (newName.isEmpty() && dateOfBirth == null) {
             ConsoleIO.info("Nothing was changed.");
             return;
@@ -107,16 +94,17 @@ public class ReceptionistMenu {
         if (patient == null) {
             return;
         }
-        if (_recordService.hasRecordsForPatient(patient.getId())) {
+        if (_recordService.hasExaminedRecords(patient.getId())) {
             throw new InvalidInputException("Cannot remove '" + patient.getName()
-                    + "': the patient already has visit records.");
+                    + "': the patient already has examined visits (IN_PROGRESS or DONE).");
         }
-        if (!ConsoleIO.confirm("Remove patient '" + patient.getName() + "'?")) {
+        if (!ConsoleIO.confirm("Remove patient '" + patient.getName()
+                + "' and the waiting visit created for this patient?")) {
             ConsoleIO.info("Nothing was removed.");
             return;
         }
         String name = patient.getName();
-        _patientService.remove(patient.getId());
+        _recordService.removePatientWithWaitingVisits(patient.getId());
         ConsoleIO.success("Patient removed: " + name);
     }
 
@@ -129,7 +117,7 @@ public class ReceptionistMenu {
         for (Patient p : patients) {
             rows.add(new String[]{
                 p.getId(), p.getName(),
-                ConsoleIO.formatDate(p.getDateOfBirth()),
+                DateUtils.format(p.getDateOfBirth()),
                 String.valueOf(p.getRecordIds().size())
             });
         }
@@ -143,46 +131,189 @@ public class ReceptionistMenu {
             return;
         }
         List<String[]> rows = new ArrayList<>();
+        int number = 1;
         for (Department d : departments) {
-            rows.add(new String[]{d.getName()});
+            rows.add(new String[]{String.valueOf(number++), d.getName(),
+                String.valueOf(d.getWaitingQueue().size())});
         }
-        ConsoleIO.printTable(new String[]{"Department"}, rows);
+        ConsoleIO.printTable(new String[]{"No.", "Department", "Waiting"}, rows);
     }
 
     private void newVisit() throws InvalidInputException, NotFoundException, DuplicateDataException {
-        String text = ConsoleIO.readLine("Patient name or code (add ? to search, 0 to cancel): ");
-        Patient patient;
-        try {
-            patient = Picker.patientFromText(_patientService, text);
-        } catch (NotFoundException e) {
-            if (text.endsWith("?")) {
-                throw e;
-            }
-            if (!ConsoleIO.confirm("Patient '" + text + "' is not registered. Register now?")) {
-                return;
-            }
-            LocalDate dateOfBirth = ConsoleIO.parseDate(
-                    ConsoleIO.readLine("Date of birth (dd/MM/yyyy, Enter to skip): "));
-            patient = _patientService.findById(_patientService.register(text, dateOfBirth));
-            ConsoleIO.success("Patient registered: " + patient.getName() + " (code: " + patient.getId() + ")");
+        if (_departmentService.getAll().isEmpty()) {
+            throw new InvalidInputException("No departments yet. Ask an admin to add a department first.");
         }
-        if (patient == null) {
+        String name = readPatientName();
+        if (name == null) {
             return;
         }
-        _recordService.ensureNoActiveVisit(patient.getId());
+        LocalDate dateOfBirth = readDateOfBirth();
+        if (dateOfBirth == null) {
+            return;
+        }
 
-        printDepartments();
-        Department department = Picker.department(_departmentService, "Department");
+        List<Patient> inQueue = new ArrayList<>();
+        List<Patient> visitedBefore = new ArrayList<>();
+        for (Patient p : _patientService.findByNameAndDateOfBirth(name, dateOfBirth)) {
+            if (_recordService.findActiveByPatient(p.getId()) != null) {
+                inQueue.add(p);
+            } else {
+                visitedBefore.add(p);
+            }
+        }
+
+        Patient returning = null;
+        if (!visitedBefore.isEmpty()) {
+            ConsoleIO.warning("A patient named '" + name + "' born " + DateUtils.format(dateOfBirth)
+                    + " has visited this hospital before:");
+            printVisitedBefore(visitedBefore);
+            if (ConsoleIO.confirm("Is this the same person who has visited here before?")) {
+                returning = visitedBefore.size() == 1
+                        ? visitedBefore.get(0) : choosePatient(visitedBefore);
+                if (returning == null) {
+                    ConsoleIO.info("Registration cancelled.");
+                    return;
+                }
+            }
+        }
+        if (returning == null && !inQueue.isEmpty()) {
+            for (Patient p : inQueue) {
+                Record active = _recordService.findActiveByPatient(p.getId());
+                Department d = _departmentService.findById(active.getCurrentDepartmentId());
+                ConsoleIO.warning("Patient '" + p.getName() + "' born " + DateUtils.format(p.getDateOfBirth())
+                        + " (code: " + p.getId() + ") is currently in the queue of '"
+                        + (d == null ? active.getCurrentDepartmentId() : d.getName())
+                        + "' (" + active.getStatus() + ").");
+            }
+            if (!ConsoleIO.confirm("Confirm this is a NEW, different patient to register?")) {
+                ConsoleIO.info("Registration cancelled.");
+                return;
+            }
+        }
+
+        Department department = chooseDepartment();
         if (department == null) {
             return;
         }
-        System.out.println("Priority: 1. NORMAL   2. URGENT   3. EMERGENCY");
-        int p = ConsoleIO.readChoice("Choose priority: ", 1, 3);
-        Priority priority = Priority.values()[p - 1];
+        Priority priority = choosePriority();
+        if (priority == null) {
+            return;
+        }
 
-        _recordService.register(patient.getId(), department.getId(), priority);
-        ConsoleIO.success("Visit created: " + patient.getName() + " -> " + department.getName()
-                + " (" + priority + ").");
+        if (returning != null) {
+            _recordService.register(returning.getId(), department.getId(), priority);
+            ConsoleIO.success("Visit created for returning patient " + returning.getName()
+                    + " (code: " + returning.getId() + ") -> " + department.getName() + " (" + priority + ").");
+        } else {
+            String recordId = _recordService.registerNewPatientVisit(name, dateOfBirth, department.getId(), priority);
+            Patient patient = _patientService.findById(_recordService.findById(recordId).getPatientId());
+            ConsoleIO.success("New patient registered: " + patient.getName() + " (code: " + patient.getId()
+                    + ") -> " + department.getName() + " (" + priority + ").");
+        }
+    }
+
+    private String readPatientName() {
+        while (true) {
+            String text = ConsoleIO.readLine("Patient name (0 to cancel): ");
+            if (text.equals("0")) {
+                return null;
+            }
+            try {
+                return _patientService.checkName(text);
+            } catch (InvalidInputException e) {
+                ConsoleIO.error(e.getMessage());
+            }
+        }
+    }
+
+    private LocalDate readDateOfBirth() {
+        while (true) {
+            String text = ConsoleIO.readLine("Date of birth (dd/MM/yyyy, required, 0 to cancel): ");
+            if (text.equals("0")) {
+                return null;
+            }
+            try {
+                LocalDate date = DateUtils.parseDate(text);
+                _patientService.checkDateOfBirth(date);
+                return date;
+            } catch (InvalidInputException e) {
+                ConsoleIO.error(e.getMessage());
+            }
+        }
+    }
+
+    private void printVisitedBefore(List<Patient> patients) {
+        List<String[]> rows = new ArrayList<>();
+        int number = 1;
+        for (Patient p : patients) {
+            Record last = _recordService.findLastVisit(p.getId());
+            Department d = last == null ? null : _departmentService.findById(last.getCurrentDepartmentId());
+            rows.add(new String[]{
+                String.valueOf(number++), p.getId(), p.getName(),
+                DateUtils.format(p.getDateOfBirth()),
+                String.valueOf(p.getRecordIds().size()),
+                last == null ? "-" : DateUtils.format(last.getVisitTime()),
+                last == null ? "-" : (d == null ? last.getCurrentDepartmentId() : d.getName())
+            });
+        }
+        ConsoleIO.printTable(new String[]{"No.", "Code", "Name", "Date of birth", "Visits",
+            "Last visit", "Last department"}, rows);
+    }
+
+    private Patient choosePatient(List<Patient> patients) {
+        while (true) {
+            try {
+                int choice = ConsoleIO.readChoice("Select number (0 = cancel): ", 0, patients.size());
+                return choice == 0 ? null : patients.get(choice - 1);
+            } catch (InvalidInputException e) {
+                ConsoleIO.error(e.getMessage());
+            }
+        }
+    }
+
+    private Department chooseDepartment() {
+        List<Department> departments = _departmentService.getAll();
+        printDepartments();
+        while (true) {
+            String text = ConsoleIO.readLine("Department No. or name (add ? to search, 0 to cancel): ");
+            try {
+                if (text.matches("\\d+")) {
+                    int number = Integer.parseInt(text);
+                    if (number == 0) {
+                        ConsoleIO.info("Registration cancelled.");
+                        return null;
+                    }
+                    if (number > departments.size()) {
+                        throw new InvalidInputException("No. " + number + " is out of range. Please choose from 1 to "
+                                + departments.size() + ".");
+                    }
+                    return departments.get(number - 1);
+                }
+                Department department = Picker.departmentFromText(_departmentService, text);
+                if (department != null) {
+                    return department;
+                }
+                printDepartments();
+            } catch (InvalidInputException | NotFoundException e) {
+                ConsoleIO.error(e.getMessage());
+            }
+        }
+    }
+
+    private Priority choosePriority() {
+        System.out.println("Priority: 1. NORMAL   2. URGENT   3. EMERGENCY");
+        while (true) {
+            try {
+                int p = ConsoleIO.readChoice("Choose priority (0 to cancel): ", 0, 3);
+                if (p == 0) {
+                    ConsoleIO.info("Registration cancelled.");
+                    return null;
+                }
+                return Priority.values()[p - 1];
+            } catch (InvalidInputException e) {
+                ConsoleIO.error(e.getMessage());
+            }
+        }
     }
 
     private void searchRecords() {
@@ -210,13 +341,14 @@ public class ReceptionistMenu {
             Patient patient = _patientService.findById(r.getPatientId());
             Department department = _departmentService.findById(r.getCurrentDepartmentId());
             rows.add(new String[]{
+                r.getPatientId(),
                 patient == null ? r.getPatientId() : patient.getName(),
                 department == null ? r.getCurrentDepartmentId() : department.getName(),
                 String.valueOf(r.getPriority()),
                 String.valueOf(r.getStatus()),
-                ConsoleIO.formatDateTime(r.getVisitTime())
+                DateUtils.format(r.getVisitTime())
             });
         }
-        ConsoleIO.printTable(new String[]{"Patient", "Department", "Priority", "Status", "Visit Time"}, rows);
+        ConsoleIO.printTable(new String[]{"Code", "Patient", "Department", "Priority", "Status", "Visit Time"}, rows);
     }
 }

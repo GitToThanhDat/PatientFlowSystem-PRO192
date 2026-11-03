@@ -1,15 +1,21 @@
 package ui;
 
+import exception.InvalidInputException;
+import exception.NotFoundException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import model.Department;
 import model.Doctor;
+import model.Patient;
+import model.Record;
+import model.RecordFilter;
+import model.RecordStatus;
+import service.DepartmentService;
 import service.ExaminationService;
 import service.PatientService;
 import service.RecordService;
-import java.io.*;
-import exception.*;
-import java.util.*;
-import java.time.LocalDateTime;
-import model.*;
-import service.*;
+import util.DateUtils;
 
 public class DoctorMenu {
     private final static int MAX = 4;
@@ -101,7 +107,7 @@ public class DoctorMenu {
                 Patient patient = patientService.findById(record.getPatientId());
                 System.out.println("Current examining patient: "
                         + (patient == null ? record.getPatientId() : patient.getName()));
-                System.out.println("Patient's visit time: " + ConsoleIO.formatDateTime(record.getVisitTime()));
+                System.out.println("Patient's visit time: " + DateUtils.format(record.getVisitTime()));
             }
         }
         
@@ -149,7 +155,7 @@ public class DoctorMenu {
             rows.add(new String[]{
                 patient == null ? record.getPatientId() : patient.getName(),
                 record.getPriority().toString(),
-                ConsoleIO.formatDateTime(record.getVisitTime())
+                DateUtils.format(record.getVisitTime())
             });
         }
         
@@ -315,7 +321,7 @@ public class DoctorMenu {
 
     private LocalDateTime parseVisitDate(String value) throws InvalidInputException
     {
-        return ConsoleIO.parseDate(value).atStartOfDay();
+        return DateUtils.parseDate(value).atStartOfDay();
     }
 
     private RecordStatus readRecordStatus() throws InvalidInputException
@@ -341,7 +347,7 @@ public class DoctorMenu {
             Department department = departmentService.findById(record.getCurrentDepartmentId());
             rows.add(new String[]{
                 patient == null ? record.getPatientId() : patient.getName(),
-                ConsoleIO.formatDateTime(record.getVisitTime()),
+                DateUtils.format(record.getVisitTime()),
                 record.getStatus().toString(),
                 department == null ? record.getCurrentDepartmentId() : department.getName()
             });

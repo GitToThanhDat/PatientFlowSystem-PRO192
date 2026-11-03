@@ -1,11 +1,9 @@
 package model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class Record implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Record {
     private final String id;
     private final String patientId;
     

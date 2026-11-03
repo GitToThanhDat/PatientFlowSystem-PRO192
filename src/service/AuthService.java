@@ -11,6 +11,7 @@ import model.Receptionist;
 import model.User;
 import model.Role;
 import util.TextUtils;
+import util.Validator;
 
 public class AuthService {
     private final List<User> _userList;
@@ -41,22 +42,14 @@ public class AuthService {
     }
 
     public List<User> search(String keyword){
-        String key = TextUtils.cleanName(keyword);
         List<User> result = new ArrayList<>();
         for (User u : this._userList){
-            if (TextUtils.cleanName(u.getUserName()).contains(key)
-                    || TextUtils.cleanName(u.getFullName()).contains(key)) {
+            if (TextUtils.containsKeyword(u.getUserName(), keyword)
+                    || TextUtils.containsKeyword(u.getFullName(), keyword)) {
                 result.add(u);
             }
         }
         return result;
-    }
-
-    private String checkText(String value, String label) throws InvalidInputException {
-        if (value == null || value.trim().isEmpty()) {
-            throw new InvalidInputException(label + " must not be empty.");
-        }
-        return value.trim();
     }
 
     public String register(
@@ -68,12 +61,9 @@ public class AuthService {
         if (role == null) {
             throw new InvalidInputException("Role must not be null.");
         }
-        String cleanUserName = checkText(userName, "Username");
-        String cleanPassword = checkText(password, "Password");
-        String cleanFullName = checkText(fullName, "Full name");
-        if (cleanUserName.contains("?") || cleanUserName.equals("0")) {
-            throw new InvalidInputException("Username must not contain '?' and must not be '0'.");
-        }
+        String cleanUserName = Validator.requireName(userName, "Username");
+        String cleanPassword = Validator.requireText(password, "Password");
+        String cleanFullName = Validator.requireText(fullName, "Full name");
 
         if (findByUserName(cleanUserName) != null){
             throw new DuplicateDataException("Username '" + cleanUserName + "' already exists.");
@@ -120,7 +110,7 @@ public class AuthService {
         if (u == null) {
             throw new NotFoundException("Account '" + userName + "' not found.");
         }
-        u.setFullName(checkText(newFullName, "Full name"));
+        u.setFullName(Validator.requireText(newFullName, "Full name"));
     }
 
     public void deactivateAccount(String userName) throws NotFoundException {

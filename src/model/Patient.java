@@ -1,10 +1,8 @@
 package model;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-public class Patient implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Patient {
     
     private final String id;
     private String name;

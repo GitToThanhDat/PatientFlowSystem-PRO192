@@ -7,15 +7,17 @@ import java.util.List;
 import exception.InvalidInputException;
 import exception.NotFoundException;
 import model.Patient;
+import util.IdGenerator;
 import util.TextUtils;
+import util.Validator;
 
 public class PatientService {
     private final List<Patient> _patientList;
-    private int _idCounter;
+    private final IdGenerator _ids;
 
     public PatientService() {
         this._patientList = new ArrayList<>();
-        this._idCounter = 1;
+        this._ids = new IdGenerator("pat");
     }
 
     public Patient findById(String id) {
@@ -47,10 +49,9 @@ public class PatientService {
     }
 
     public List<Patient> findByName(String name) {
-        String key = TextUtils.cleanName(name);
         List<Patient> result = new ArrayList<>();
         for (Patient p : _patientList) {
-            if (TextUtils.cleanName(p.getName()).equals(key)) {
+            if (TextUtils.sameName(p.getName(), name)) {
                 result.add(p);
             }
         }
@@ -58,34 +59,30 @@ public class PatientService {
         return result;
     }
 
-    private String checkName(String name) throws InvalidInputException {
-        if (name == null || name.trim().isEmpty()) {
-            throw new InvalidInputException("Patient name must not be empty.");
+    public List<Patient> findByNameAndDateOfBirth(String name, LocalDate dateOfBirth) {
+        List<Patient> result = new ArrayList<>();
+        for (Patient p : _patientList) {
+            if (TextUtils.sameName(p.getName(), name)
+                    && dateOfBirth != null && dateOfBirth.equals(p.getDateOfBirth())) {
+                result.add(p);
+            }
         }
-        if (name.contains("?") || name.trim().equals("0")) {
-            throw new InvalidInputException("Patient name must not contain '?' and must not be '0'.");
-        }
-        return name.trim();
+        return result;
     }
 
-    private void checkDateOfBirth(LocalDate dateOfBirth) throws InvalidInputException {
-        if (dateOfBirth == null) {
-            return;
-        }
-        if (dateOfBirth.isAfter(LocalDate.now())) {
-            throw new InvalidInputException("Date of birth must not be in the future.");
-        }
-        if (dateOfBirth.getYear() < 1900) {
-            throw new InvalidInputException("Date of birth must not be before 1900.");
-        }
+    public String checkName(String name) throws InvalidInputException {
+        return Validator.requireName(name, "Patient name");
+    }
+
+    public void checkDateOfBirth(LocalDate dateOfBirth) throws InvalidInputException {
+        Validator.requirePastDate(dateOfBirth, "Date of birth");
     }
 
     public String register(String name, LocalDate dateOfBirth) throws InvalidInputException {
         String cleanName = checkName(name);
         checkDateOfBirth(dateOfBirth);
 
-        String id = "pat-" + _idCounter;
-        _idCounter++;
+        String id = _ids.next();
         _patientList.add(new Patient(id, cleanName, dateOfBirth));
 
         return id;
@@ -124,10 +121,9 @@ public class PatientService {
             return new ArrayList<>(_patientList);
         }
 
-        String cleanKeyword = TextUtils.cleanName(keyword);
         List<Patient> result = new ArrayList<>();
         for (Patient p : _patientList) {
-            if (TextUtils.cleanName(p.getName()).contains(cleanKeyword)) {
+            if (TextUtils.containsKeyword(p.getName(), keyword)) {
                 result.add(p);
             }
         }
@@ -140,13 +136,11 @@ public class PatientService {
     }
 
     public int getNextNumber() {
-        return _idCounter;
+        return _ids.getNextNumber();
     }
 
     public void ensureNextNumberAtLeast(int number) {
-        if (number > _idCounter) {
-            _idCounter = number;
-        }
+        _ids.ensureNextNumberAtLeast(number);
     }
 
     public void loadData(List<Patient> list) {
@@ -155,10 +149,10 @@ public class PatientService {
             _patientList.addAll(list);
         }
 
-        int max = 0;
+        List<String> ids = new ArrayList<>();
         for (Patient p : _patientList) {
-            max = Math.max(max, TextUtils.extractCounter(p.getId()));
+            ids.add(p.getId());
         }
-        _idCounter = max + 1;
+        _ids.resetAfter(ids);
     }
 }

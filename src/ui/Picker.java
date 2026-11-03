@@ -10,6 +10,7 @@ import model.User;
 import service.AuthService;
 import service.DepartmentService;
 import service.PatientService;
+import util.DateUtils;
 
 public class Picker {
 
@@ -34,10 +35,11 @@ public class Picker {
         return choose(readText(prompt), patientSource(service));
     }
 
-    public static Patient patientFromText(PatientService service, String text)
+    public static Department departmentFromText(DepartmentService service, String text)
             throws InvalidInputException, NotFoundException {
-        return choose(text, patientSource(service));
+        return choose(text, departmentSource(service));
     }
+
 
     public static User account(AuthService service, String prompt)
             throws InvalidInputException, NotFoundException {
@@ -166,7 +168,7 @@ public class Picker {
             public String[] row(Patient item) {
                 return new String[]{
                     item.getId(), item.getName(),
-                    ConsoleIO.formatDate(item.getDateOfBirth()),
+                    DateUtils.format(item.getDateOfBirth()),
                     String.valueOf(item.getRecordIds().size())
                 };
             }

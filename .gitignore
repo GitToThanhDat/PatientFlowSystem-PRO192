@@ -1,7 +1,7 @@
 /build/
 /dist/
 /nbproject/private/
-# Dữ liệu chạy thật (serialization) - không đưa lên git
-/data/*.dat
-/data/*.dat.tmp
+# Dữ liệu chạy thật (file txt) - không đưa lên git
+/data/*.txt
+/data/*.tmp
 /data/*.corrupt

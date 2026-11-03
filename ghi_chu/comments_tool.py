@@ -318,7 +318,7 @@ def cmd_restore(args):
         if not os.path.exists(path):
             print("Bỏ qua (không có file): " + rel)
             continue
-        entries = [e for e in info["entries"] if e["category"] in only]
+        entries = [e for e in info["entries"] if e["category"] in only and not e.get("obsolete")]
         if not entries:
             continue
         text, newline = read_source(path)

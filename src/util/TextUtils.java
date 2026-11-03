@@ -18,6 +18,14 @@ public class TextUtils {
         return noAccent.replace(" ", "").toLowerCase();
     }
     
+    public static boolean sameName(String a, String b) {
+        return cleanName(a).equals(cleanName(b));
+    }
+
+    public static boolean containsKeyword(String text, String keyword) {
+        return cleanName(text).contains(cleanName(keyword));
+    }
+
     public static int extractCounter(String id){
         if (id==null) return 0;
         int idx = id.lastIndexOf('-');

@@ -1,14 +1,25 @@
 package service;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import model.*;
-import exception.*;
-import java.util.stream.Stream;
+import exception.DuplicateDataException;
+import exception.InvalidInputException;
+import exception.NotFoundException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import model.Department;
+import model.Patient;
+import model.Priority;
+import model.Record;
+import model.RecordFilter;
+import model.RecordStatus;
+import model.VisitSegment;
+import util.IdGenerator;
 
 public class RecordService {
     private final List<Record> recordList;
-    private int idCounter;
+    private final IdGenerator ids;
     private final PatientService patientService;
     private final DepartmentService departmentService;
     
@@ -17,7 +28,7 @@ public class RecordService {
             DepartmentService departmentService)
     {
         this.recordList = new ArrayList<>();
-        this.idCounter = 1;
+        this.ids = new IdGenerator("vis");
         this.patientService = patientService;
         this.departmentService = departmentService;
     }
@@ -47,6 +58,20 @@ public class RecordService {
         return null;
     }
     
+    public Record findLastVisit(String patientId)
+    {
+        Record last = null;
+        for(Record record : this.recordList)
+        {
+            if(record.getPatientId().equals(patientId)
+                    && (last == null || !record.getVisitTime().isBefore(last.getVisitTime())))
+            {
+                last = record;
+            }
+        }
+        return last;
+    }
+    
     public void ensureNoActiveVisit(String patientId) throws DuplicateDataException
     {
         Record active = this.findActiveByPatient(patientId);
@@ -60,14 +85,40 @@ public class RecordService {
                 + " (" + active.getStatus() + ").");
     }
     
-    public boolean hasRecordsForPatient(String patientId)
+    
+    public boolean hasExaminedRecords(String patientId)
     {
         for(Record record : this.recordList)
         {
-            if(record.getPatientId().equals(patientId))
+            if(record.getPatientId().equals(patientId)
+                    && record.getStatus() != RecordStatus.WAITING)
                 return true;
         }
         return false;
+    }
+    
+    public void removePatientWithWaitingVisits(String patientId)
+            throws InvalidInputException, NotFoundException
+    {
+        Patient patient = this.patientService.findById(patientId);
+        if(patient == null)
+            throw new NotFoundException("Patient not found.");
+        if(this.hasExaminedRecords(patientId))
+            throw new InvalidInputException("Cannot remove '" + patient.getName()
+                    + "': the patient already has examined visits (IN_PROGRESS or DONE).");
+        Iterator<Record> it = this.recordList.iterator();
+        while(it.hasNext())
+        {
+            Record record = it.next();
+            if(record.getPatientId().equals(patientId))
+            {
+                Department dept = this.departmentService.findById(record.getCurrentDepartmentId());
+                if(dept != null)
+                    dept.getWaitingQueue().remove(record.getId());
+                it.remove();
+            }
+        }
+        this.patientService.remove(patientId);
     }
     
     public boolean isDepartmentReferenced(String departmentId)
@@ -121,8 +172,7 @@ public class RecordService {
         
         this.ensureNoActiveVisit(patientId);
         
-        String recordId = "vis-" + this.idCounter;
-        this.idCounter++;
+        String recordId = this.ids.next();
         
         Record record = new Record(
                 recordId,
@@ -135,6 +185,24 @@ public class RecordService {
         this.recordList.add(record);
         
         return recordId;
+    }
+    
+    public String registerNewPatientVisit(
+            String patientName,
+            LocalDate dateOfBirth,
+            String departmentId,
+            Priority priority)
+        throws InvalidInputException, NotFoundException, DuplicateDataException
+    {
+        if(departmentId == null)
+            throw new InvalidInputException("departmentId must not be null!");
+        if(this.departmentService.findById(departmentId) == null)
+            throw new NotFoundException("Department not found.");
+        if(priority == null)
+            throw new InvalidInputException("priority must not be null");
+        
+        String patientId = this.patientService.register(patientName, dateOfBirth);
+        return this.register(patientId, departmentId, priority);
     }
     
     public void updateStatus(String recordId, RecordStatus newStatus)
@@ -263,13 +331,12 @@ public class RecordService {
     
     public int getNextNumber()
     {
-        return this.idCounter;
+        return this.ids.getNextNumber();
     }
     
     public void ensureNextNumberAtLeast(int number)
     {
-        if(number > this.idCounter)
-            this.idCounter = number;
+        this.ids.ensureNextNumberAtLeast(number);
     }
     
     public void loadData(List<Record> list)
@@ -277,12 +344,12 @@ public class RecordService {
         this.recordList.clear();
         if(list != null) this.recordList.addAll(list);
 
-        int maxId = 0;
+        List<String> recordIds = new ArrayList<>();
         for(Record record : this.recordList)
         {
-            maxId = Math.max(maxId, util.TextUtils.extractCounter(record.getId()));
+            recordIds.add(record.getId());
         }
-        this.idCounter = maxId + 1;
+        this.ids.resetAfter(recordIds);
     }
     
 }

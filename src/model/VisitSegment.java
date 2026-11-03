@@ -1,10 +1,8 @@
 package model;
-import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
-public class VisitSegment implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class VisitSegment {
     private String departmentId;
     private String doctorId;
     private String examResults;

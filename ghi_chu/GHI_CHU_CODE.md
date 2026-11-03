@@ -27,6 +27,357 @@ python ghi_chu/comments_tool.py restore --ledger ghi_chu/comments.json --only no
 
 - Mỗi comment được gắn với một dòng code ("gắn với"). Nếu dòng code đó đã bị sửa sau khi gỡ comment thì công cụ sẽ báo comment nào không đặt lại được thay vì đặt sai chỗ.
 - Phần ghi chú đánh dấu *(đợt 2)* là các điều chỉnh làm trong lần cải tiến thứ hai (bỏ ID, chọn theo tên, gộp luồng lễ tân, lưu cài đặt, ...).
+- Phần *(đợt 3)* và *(đợt 4)* xem các mục ngay bên dưới. Entry `obsolete` không được đặt lại vào code. Bảng thống kê và chi tiết từng file ở mục 3–4 là **bản gốc lúc gỡ comment** (trước đợt 3), giữ nguyên để đối chiếu.
+
+## Đợt 3 (02/11/2026) – lưu trữ txt, sửa lỗi tiếng Việt, làm lại New visit
+
+Code vẫn được giữ sạch (không có comment). Các ghi chú của đợt 3 chỉ nằm trong `comments.json` và mục này; lệnh `restore` sẽ đặt chúng vào code nếu cần.
+
+**Tóm tắt thay đổi**
+
+- Lỗi `Bác Sĩ Nhi` → `B c S? Nhi`: do bảng mã khi **nhập từ bàn phím**, không phải do serialization. `ConsoleIO` nay đọc/ghi console bằng UTF-8 cố định (`-Dconsole.encoding=...` để đổi); `Main` gọi `ConsoleIO.setup()` đầu tiên; thêm `run.bat` (`chcp 65001`).
+- Lưu trữ: bỏ `SerialStorage` và `implements Serializable`; thêm `TextStorage` (file `.txt` UTF-8, phân tách `|`, ghi file tạm rồi move, file hỏng → `*.corrupt`). 5 file: `departments.txt`, `patients.txt`, `records.txt`, `users.txt`, `settings.txt`.
+- New visit: bỏ "Register new patient only"; đăng ký luôn kèm record và khoa; ngày sinh bắt buộc; kiểm tra trùng theo tên chuẩn hóa + ngày sinh với 2 trường hợp (đang trong hàng đợi / đã từng khám); chọn khoa bằng số No.; nhập sai thì hỏi lại đúng bước đó.
+- Kéo theo: Remove patient chỉ cho xóa bệnh nhân chưa từng khám (xóa luôn lượt đang chờ); Search visit records có thêm cột Code; menu lễ tân còn 6 mục.
+- `RecordService`, `DoctorMenu`: đổi `import model.*` thành import tường minh vì `java.lang.Record` (JDK 16+) trùng tên `model.Record`.
+
+**Số lượng ghi chú sau đợt 3:** 167 entry cũ + 27 entry mới = 194; trong đó 20 entry cũ đánh dấu `obsolete` (không còn đúng, bị bỏ qua khi restore), 7 entry cũ được gắn lại vào dòng code mới. Restore toàn bộ hiện đặt lại được **174** comment, 0 lỗi.
+
+**Ghi chú mới của đợt 3**
+
+- `src/data/DepartmentData.java` — gắn với: `private static final String FILE_NAME = "departments.txt";`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): lưu departments.txt: id|name|waitingQueue (các record id cách nhau bởi dấu phẩy).
+  ```
+
+- `src/data/PatientData.java` — gắn với: `private static final String FILE_NAME = "patients.txt";`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): lưu patients.txt: id|name|dateOfBirth (yyyy-MM-dd)|recordIds.
+  ```
+
+- `src/data/RecordData.java` — gắn với: `public class RecordData {`
+
+  ```
+  /**
+   *
+   * @author khanh3327
+   */
+  ```
+
+- `src/data/RecordData.java` — gắn với: `private static final String FILE_NAME = "records.txt";`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): lưu records.txt. Dòng RECORD = 1 lượt khám; dòng SEGMENT = 1 lần khám của lượt đó (HISTORY = đã xong, CURRENT = đang khám).
+          // Đọc RECORD trước rồi gắn SEGMENT theo recordId; thời gian ghi tới giây cho dễ đọc.
+  ```
+
+- `src/model/Department.java` — gắn với: `public class Department {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization.
+  ```
+
+- `src/model/Patient.java` — gắn với: `public class Patient {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization.
+  ```
+
+- `src/model/Record.java` — gắn với: `public class Record {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization.
+  ```
+
+- `src/model/User.java` — gắn với: `public abstract class User {`
+
+  ```
+  //abstract class, phải chọn luôn một vị trí chức vụ.
+  ```
+
+- `src/model/User.java` — gắn với: `public abstract class User {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization.
+  ```
+
+- `src/model/VisitSegment.java` — gắn với: `public class VisitSegment {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization.
+  ```
+
+- `src/service/PatientService.java` — gắn với: `public List<Patient> findByNameAndDateOfBirth(String name, LocalDate dateOfBirth) {`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): dùng để kiểm tra trùng khi New visit: trùng khi tên đã chuẩn hóa (cleanName: bỏ dấu, bỏ khoảng trắng, chữ thường) VÀ ngày sinh bằng nhau.
+  ```
+
+- `src/service/PatientService.java` — gắn với: `public void checkDateOfBirth(LocalDate dateOfBirth) throws InvalidInputException {`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): ngày sinh bắt buộc (trước đây null được bỏ qua); checkName/checkDateOfBirth đổi sang public để UI hỏi lại ngay khi nhập sai.
+  ```
+
+- `src/service/RecordService.java` — gắn với: `import exception.DuplicateDataException;`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ import model.* / java.util.* vì từ JDK 16 có java.lang.Record trùng tên với model.Record
+  // (lỗi 'reference to Record is ambiguous' nếu không biên dịch với --release 8). Bỏ hasRecordsForPatient vì không còn dùng.
+  ```
+
+- `src/service/RecordService.java` — gắn với: `public String registerNewPatientVisit(`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): bệnh nhân mới luôn được tạo cùng với lượt khám. Kiểm tra khoa và mức ưu tiên TRƯỚC khi tạo bệnh nhân,
+          // nên không bao giờ có bệnh nhân không có record.
+  ```
+
+- `src/service/RecordService.java` — gắn với: `public void removePatientWithWaitingVisits(String patientId)`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): vì bệnh nhân nào cũng có record, Remove patient chỉ được phép khi mọi lượt khám của bệnh nhân còn WAITING;
+          // các lượt đó bị xóa khỏi danh sách và khỏi hàng đợi của khoa trước khi xóa bệnh nhân.
+  ```
+
+- `src/ui/ConsoleIO.java` — gắn với: `private static final Charset CONSOLE_CHARSET = resolveCharset();`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): đọc bàn phím và in màn hình bằng bảng mã cố định (mặc định UTF-8, đổi được bằng -Dconsole.encoding=...).
+      // Trước đây new Scanner(System.in) và System.out dùng bảng mã mặc định của JVM. Bảng mã này đổi theo phiên bản JDK (JDK 18+ mặc định UTF-8, JDK 19+ System.out theo stdout.encoding)
+      // và thường khác bảng mã của console Windows/NetBeans -> gõ 'Bác Sĩ Nhi' bị thành 'B c S? Nhi'. Lỗi xảy ra lúc nhập, không phải do serialization.
+  ```
+
+- `src/ui/ConsoleIO.java` — gắn với: `public static void setup() {`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): gọi đầu tiên trong main để System.out in ra bằng cùng bảng mã với Scanner.
+  ```
+
+- `src/ui/DoctorMenu.java` — gắn với: `import exception.InvalidInputException;`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ import model.* / service.* / java.util.* / java.io.* (java.io không dùng) vì java.lang.Record (JDK 16+) trùng tên với model.Record.
+  ```
+
+- `src/ui/Main.java` — gắn với: `ConsoleIO.setup();`
+
+  ```
+          //có điều chỉnh với cách viết ban đầu (đợt 3): chuyển System.out sang UTF-8 trước khi in bất cứ thứ gì.
+  ```
+
+- `src/ui/ReceptionistMenu.java` — gắn với: `private void newVisit() throws InvalidInputException, NotFoundException, DuplicateDataExce`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ 'Register new patient only'; mỗi lần đăng ký đều tạo record kèm khoa. Ngày sinh bắt buộc.
+          // Trùng tên chuẩn hóa + ngày sinh: người trùng đang trong hàng đợi -> hỏi có phải bệnh nhân mới (N = hủy);
+          // người trùng đã từng khám -> hỏi có phải cùng người (y = record mới gắn mã cũ, N = bệnh nhân mới mã mới). Nhập sai ở bước nào thì hỏi lại bước đó.
+  ```
+
+- `src/ui/ReceptionistMenu.java` — gắn với: `private Department chooseDepartment() {`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): chọn khoa bằng số No. trong bảng (vẫn nhận tên hoặc tên kèm ?); sai thì báo lỗi và hỏi lại, không quay về menu.
+  ```
+
+- `src/ui/ReceptionistMenu.java` — gắn với: `private void removePatient() throws InvalidInputException, NotFoundException {`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): chỉ xóa được bệnh nhân chưa từng được khám, xóa luôn lượt khám đang chờ.
+  ```
+
+- `src/data/TextStorage.java` — gắn với: `public final class TextStorage {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 3): thay cho SerialStorage. Mỗi danh sách lưu thành 1 file .txt UTF-8 (ghi rõ UTF-8 để không phụ thuộc JDK),
+  // dòng đầu '# ...' là tên cột, mỗi đối tượng 1 dòng, các trường cách nhau bởi '|'. Ký tự '\', '|', xuống dòng được ghi thành '\\', '\p', '\n'.
+  // Giữ cách ghi file tạm rồi move (không mất dữ liệu khi lỗi giữa chừng) và đổi tên file hỏng thành *.corrupt như SerialStorage cũ.
+  ```
+
+- `src/data/UserData.java` — gắn với: `private static final String FILE_NAME = "users.txt";`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): lưu users.txt: role|id|userName|password|fullName|active|departmentId|currentRecordId (2 cột cuối chỉ dùng cho DOCTOR).
+  ```
+
+- `src/data/SettingsData.java` — gắn với: `private static final String FILE_NAME = "settings.txt";`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): lưu settings.txt: key|value.
+  ```
+
+- `src/model/AppSettings.java` — gắn với: `public class AppSettings {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization.
+  ```
+
+- `src/ui/Picker.java` — gắn với: `public static Department departmentFromText(DepartmentService service, String text)`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3): thay patientFromText (không còn dùng) bằng departmentFromText và patientFromList cho luồng New visit mới.
+  ```
+
+**Ghi chú cũ không còn đúng (obsolete)**
+
+| File | Gắn với (cũ) | Lý do |
+|---|---|---|
+| `src/data/DepartmentData.java` | `public class DepartmentData {` | Đợt 3 bỏ serialization/SerialStorage, quay lại file txt (TextStorage). |
+| `src/data/DepartmentData.java` | `private static final String FILE_NAME = "departments.dat";` | Đợt 3 đổi lại sang departments.txt. |
+| `src/data/PatientData.java` | `public class PatientData {` | Đợt 3 bỏ serialization/SerialStorage, quay lại file txt (TextStorage). |
+| `src/data/PatientData.java` | `private static final String FILE_NAME = "patients.dat";` | Đợt 3 đổi lại sang patients.txt. |
+| `src/data/RecordData.java` | `public class RecordData {` | Đợt 3 bỏ serialization/SerialStorage, quay lại file txt (TextStorage). |
+| `src/data/RecordData.java` | `private static final String FILE_NAME = "records.dat";` | Đợt 3 đổi lại sang records.txt. |
+| `src/model/Admin.java` | `private static final long serialVersionUID = 1L;` | Đợt 3 bỏ serialization nên đã xóa serialVersionUID. |
+| `src/model/Department.java` | `public class Department implements Serializable {` | Đợt 3 bỏ implements Serializable. |
+| `src/model/Department.java` | `private static final long serialVersionUID = 1L;` | Đợt 3 bỏ serialization nên đã xóa serialVersionUID. |
+| `src/model/Doctor.java` | `private static final long serialVersionUID = 1L;` | Đợt 3 bỏ serialization nên đã xóa serialVersionUID. |
+| `src/model/Patient.java` | `public class Patient implements Serializable {` | Đợt 3 bỏ implements Serializable. |
+| `src/model/Patient.java` | `private static final long serialVersionUID = 1L;` | Đợt 3 bỏ serialization nên đã xóa serialVersionUID. |
+| `src/model/Receptionist.java` | `private static final long serialVersionUID = 1L;` | Đợt 3 bỏ serialization nên đã xóa serialVersionUID. |
+| `src/model/Record.java` | `private static final long serialVersionUID = 1L;` | Đợt 3 bỏ serialization nên đã xóa serialVersionUID. |
+| `src/model/User.java` | `public abstract class User implements Serializable {` | Đợt 3 bỏ implements Serializable; phần ghi chú abstract class được tách thành entry mới. |
+| `src/model/User.java` | `private static final long serialVersionUID = 1L;` | Đợt 3 bỏ serialization nên đã xóa serialVersionUID. |
+| `src/model/VisitSegment.java` | `private static final long serialVersionUID = 1L;` | Đợt 3 bỏ serialization nên đã xóa serialVersionUID. |
+| `src/ui/MainMenu.java` | `private void loadAll() {` | Đợt 3: settings lưu ở settings.txt. |
+| `src/ui/MainMenu.java` | `private void saveAll() {` | Đợt 3: settings lưu ở settings.txt. |
+| `src/ui/ReceptionistMenu.java` | `private void registerPatient() throws InvalidInputException ` | Đợt 3 bỏ chức năng 'Register new patient only' (registerPatient). |
+
+**Ghi chú cũ được gắn lại**
+
+- `src/model/Department.java`: author → nay gắn với `public class Department {`
+- `src/model/Patient.java`: author → nay gắn với `public class Patient {`
+- `src/model/Record.java`: author → nay gắn với `public class Record {`
+- `src/model/User.java`: author → nay gắn với `public abstract class User {`
+- `src/model/VisitSegment.java`: author → nay gắn với `public class VisitSegment {`
+- `src/service/PatientService.java`: note → nay gắn với `public String checkName(String name) throws InvalidInputException {`
+- `src/ui/ConsoleIO.java`: note → nay gắn với `private static final Scanner SC = new Scanner(new InputStreamReader(System.in, CONSOLE_CHA`
+
+
+## Đợt 4 (02/11/2026) – tách util, thêm lần khám gần nhất
+
+**Tóm tắt thay đổi**
+
+- `util/IdGenerator` (mới): cấp mã `dep-N / pat-N / vis-N`, thay cho biến đếm viết lặp ở `DepartmentService`, `PatientService`, `RecordService`.
+- `util/Validator` (mới): kiểm tra không rỗng, cấm `?` và `0`, ngày sinh (không ở tương lai, không trước 1900); dùng ở `AuthService`, `DepartmentService`, `PatientService`. Thông báo lỗi giữ nguyên chữ.
+- `util/DateUtils` (mới): định dạng/parse ngày chuyển từ `ConsoleIO` sang; thêm chuyển đổi ISO khi lưu file cho `PatientData`, `RecordData`.
+- `util/TextUtils`: thêm `sameName`, `containsKeyword`.
+- New visit: bảng người trùng "đã từng khám" có thêm `No.`, `Last visit`, `Last department` (`RecordService.findLastVisit`); nhiều người trùng thì chọn bằng số. Bỏ `Picker.patientFromList`.
+
+**Số lượng ghi chú sau đợt 4:** 210 entry, trong đó 27 entry `obsolete`. Restore toàn bộ đặt lại được **183** comment, 0 lỗi.
+
+**Ghi chú mới của đợt 4**
+
+- `src/service/AuthService.java` — gắn với: `String cleanUserName = Validator.requireName(userName, "Username");`
+
+  ```
+          //có điều chỉnh với cách viết ban đầu (đợt 4): kiểm tra rỗng / '?' / "0" của username dùng chung util.Validator.
+  ```
+
+- `src/service/DepartmentService.java` — gắn với: `private final IdGenerator _ids;`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 4): dùng util.IdGenerator thay cho biến đếm idCounter tự quản lý.
+  ```
+
+- `src/service/PatientService.java` — gắn với: `private final IdGenerator _ids;`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 4): dùng util.IdGenerator thay cho biến đếm idCounter tự quản lý.
+  ```
+
+- `src/service/RecordService.java` — gắn với: `private final IdGenerator ids;`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 4): dùng util.IdGenerator thay cho biến đếm idCounter tự quản lý.
+  ```
+
+- `src/service/RecordService.java` — gắn với: `public Record findLastVisit(String patientId)`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 4): lấy lượt khám gần nhất của bệnh nhân để hiện ở bảng 'visited before'.
+          // Dùng !isBefore (bằng hoặc muộn hơn): thời gian lưu file tới giây nên hai lượt cùng giây sẽ bằng nhau; khi đó lượt tạo sau (đứng sau trong danh sách) được chọn.
+  ```
+
+- `src/ui/ConsoleIO.java` — gắn với: `public class ConsoleIO {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 4): bỏ formatDate / formatDateTime / parseDate, chuyển sang util.DateUtils; ConsoleIO chỉ còn nhập xuất.
+  ```
+
+- `src/ui/DoctorMenu.java` — gắn với: `return DateUtils.parseDate(value).atStartOfDay();`
+
+  ```
+          //có điều chỉnh với cách viết ban đầu (đợt 2, sửa ở đợt 4): ngày nhập theo dd/MM/yyyy, dùng chung DateUtils.parseDate
+  ```
+
+- `src/ui/ReceptionistMenu.java` — gắn với: `private void printVisitedBefore(List<Patient> patients) {`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 4): bảng người trùng 'đã từng khám' có thêm No., Last visit, Last department;
+          // nhiều người trùng thì chọn bằng số ở choosePatient (thay cho Picker.patientFromList).
+  ```
+
+- `src/util/TextUtils.java` — gắn với: `public static boolean sameName(String a, String b) {`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 4): sameName / containsKeyword thay cho cleanName(a).equals/contains(cleanName(b)) lặp ở 3 service.
+  ```
+
+- `src/ui/Picker.java` — gắn với: `public static Department departmentFromText(DepartmentService service, String text)`
+
+  ```
+      //có điều chỉnh với cách viết ban đầu (đợt 3–4): thay patientFromText (không còn dùng) bằng departmentFromText cho luồng New visit.
+  ```
+
+- `src/util/Validator.java` — gắn với: `public final class Validator {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 4): gom các kiểm tra trước đây lặp ở AuthService, DepartmentService, PatientService: không rỗng,
+  // không chứa '?' và không là "0", ngày không ở tương lai và không trước 1900. Thông báo lỗi giữ nguyên chữ như cũ (nhãn truyền vào).
+  ```
+
+- `src/util/IdGenerator.java` — gắn với: `public class IdGenerator {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 4): gom phần cấp mã dep-N / pat-N / vis-N trước đây viết lặp ở DepartmentService, PatientService, RecordService
+  // (bộ đếm, getNextNumber, ensureNextNumberAtLeast, tính lại = số lớn nhất + 1 sau khi nạp file). Mỗi service giữ một IdGenerator với tiền tố riêng.
+  ```
+
+- `src/util/DateUtils.java` — gắn với: `public final class DateUtils {`
+
+  ```
+  //có điều chỉnh với cách viết ban đầu (đợt 4): chuyển định dạng / parse ngày từ ConsoleIO sang util vì đây không phải nhập xuất màn hình;
+  // thêm toStorage / dateFromStorage / timeFromStorage (ISO, tới giây) dùng chung cho PatientData và RecordData.
+  ```
+
+**Ghi chú cũ chuyển theo code sang util**
+
+- từ `src/service/DepartmentService.java` sang `src/util/Validator.java`, gắn với `if (text.contains("?") || text.equals("0")) {`
+- từ `src/service/DepartmentService.java` sang `src/util/IdGenerator.java`, gắn với `nextNumber = max + 1;`
+- từ `src/service/RecordService.java` sang `src/util/IdGenerator.java`, gắn với `int max = 0;`
+
+**Ghi chú cũ được gắn lại vào dòng code mới**
+
+- `src/service/DepartmentService.java`: nay gắn với `String newId = _ids.next();`
+- `src/service/PatientService.java`: nay gắn với `if (TextUtils.containsKeyword(p.getName(), keyword)) {`
+- `src/ui/DoctorMenu.java`: nay gắn với `System.out.println("Patient's visit time: " + DateUtils.format(record.getVisitTime()));`
+- `src/ui/DoctorMenu.java`: nay gắn với `DateUtils.format(record.getVisitTime())`
+
+**Ghi chú cũ không còn đúng (obsolete) ở đợt 4**
+
+| File | Gắn với (cũ) | Lý do |
+|---|---|---|
+| `src/service/AuthService.java` | `return value.trim();` | Đợt 4: kiểm tra chuyển vào util.Validator. |
+| `src/service/DepartmentService.java` | `if (name.contains("?") \|\| name.trim().equals("0")) {` | Đợt 4: kiểm tra tên chuyển vào util.Validator.requireName. |
+| `src/service/DepartmentService.java` | `_idCounter = max + 1;` | Đợt 4: tính bộ đếm chuyển vào util.IdGenerator.resetAfter. |
+| `src/service/PatientService.java` | `if (name.contains("?") \|\| name.trim().equals("0")) {` | Đợt 4: kiểm tra tên chuyển vào util.Validator.requireName (ghi chú giống DepartmentService, đã chuyển một bản sang Validator). |
+| `src/service/RecordService.java` | `int maxId = 0;` | Đợt 4: tính bộ đếm chuyển vào util.IdGenerator.resetAfter. |
+| `src/ui/DoctorMenu.java` | `return ConsoleIO.parseDate(value).atStartOfDay();` | Đợt 4: parseDate chuyển sang util.DateUtils. |
+| `src/ui/Picker.java` | `public static Department departmentFromText(DepartmentServic` | Đợt 4 bỏ patientFromList; bảng chọn người trùng chuyển vào ReceptionistMenu. |
+
 
 ## 3. Thống kê theo file
 

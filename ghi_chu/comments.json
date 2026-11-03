@@ -18,7 +18,9 @@
      ],
      "anchor": "public class DepartmentData {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization/SerialStorage, quay lại file txt (TextStorage)."
     },
     {
      "kind": "trail",
@@ -48,7 +50,24 @@
      "original": "    private static final String FILE_NAME = \"departments.dat\"; //có điều chỉnh với cách viết ban đầu: trước là data/departments.txt",
      "anchor": "private static final String FILE_NAME = \"departments.dat\";",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 đổi lại sang departments.txt."
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): lưu departments.txt: id|name|waitingQueue (các record id cách nhau bởi dấu phẩy)."
+     ],
+     "anchor": "private static final String FILE_NAME = \"departments.txt\";",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
     }
    ]
   },
@@ -67,7 +86,9 @@
      ],
      "anchor": "public class PatientData {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization/SerialStorage, quay lại file txt (TextStorage)."
     },
     {
      "kind": "trail",
@@ -82,7 +103,24 @@
      "original": "    private static final String FILE_NAME = \"patients.dat\"; //có điều chỉnh với cách viết ban đầu: trước là data/patients.txt",
      "anchor": "private static final String FILE_NAME = \"patients.dat\";",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 đổi lại sang patients.txt."
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): lưu patients.txt: id|name|dateOfBirth (yyyy-MM-dd)|recordIds."
+     ],
+     "anchor": "private static final String FILE_NAME = \"patients.txt\";",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
     }
    ]
   },
@@ -126,7 +164,9 @@
      ],
      "anchor": "public class RecordData {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization/SerialStorage, quay lại file txt (TextStorage)."
     },
     {
      "kind": "trail",
@@ -141,7 +181,43 @@
      "original": "    private static final String FILE_NAME = \"records.dat\"; //có điều chỉnh với cách viết ban đầu: trước là FILE_PATH = \"data/records.dat\"",
      "anchor": "private static final String FILE_NAME = \"records.dat\";",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 đổi lại sang records.txt."
+    },
+    {
+     "kind": "block",
+     "category": "author",
+     "round": 0,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "/**",
+      " *",
+      " * @author khanh3327",
+      " */"
+     ],
+     "anchor": "public class RecordData {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026) (tách phần @author khỏi ghi chú cũ đã lỗi thời)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): lưu records.txt. Dòng RECORD = 1 lượt khám; dòng SEGMENT = 1 lần khám của lượt đó (HISTORY = đã xong, CURRENT = đang khám).",
+      "        // Đọc RECORD trước rồi gắn SEGMENT theo recordId; thời gian ghi tới giây cho dễ đọc."
+     ],
+     "anchor": "private static final String FILE_NAME = \"records.txt\";",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
     }
    ]
   },
@@ -361,7 +437,9 @@
      "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
      "anchor": "private static final long serialVersionUID = 1L;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization nên đã xóa serialVersionUID."
     }
    ]
   },
@@ -397,9 +475,10 @@
       " * @author ACER",
       " */"
      ],
-     "anchor": "public class Department implements Serializable {",
+     "anchor": "public class Department {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 3 (02/11/2026)"
     },
     {
      "kind": "trail",
@@ -414,7 +493,9 @@
      "original": "public class Department implements Serializable { //có điều chỉnh với cách viết ban đầu: thêm implements Serializable để lưu bằng serialization",
      "anchor": "public class Department implements Serializable {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ implements Serializable."
     },
     {
      "kind": "trail",
@@ -429,7 +510,24 @@
      "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
      "anchor": "private static final long serialVersionUID = 1L;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization nên đã xóa serialVersionUID."
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization."
+     ],
+     "anchor": "public class Department {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
     }
    ]
   },
@@ -482,7 +580,9 @@
      "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
      "anchor": "private static final long serialVersionUID = 1L;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization nên đã xóa serialVersionUID."
     }
    ]
   },
@@ -518,9 +618,10 @@
       " * @author ACER",
       " */"
      ],
-     "anchor": "public class Patient implements Serializable {",
+     "anchor": "public class Patient {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 3 (02/11/2026)"
     },
     {
      "kind": "trail",
@@ -535,7 +636,9 @@
      "original": "public class Patient implements Serializable { //có điều chỉnh với cách viết ban đầu: thêm implements Serializable để lưu bằng serialization",
      "anchor": "public class Patient implements Serializable {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ implements Serializable."
     },
     {
      "kind": "trail",
@@ -550,7 +653,9 @@
      "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
      "anchor": "private static final long serialVersionUID = 1L;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization nên đã xóa serialVersionUID."
     },
     {
      "kind": "trail",
@@ -566,6 +671,21 @@
      "anchor": "public Patient(String id, String name, LocalDate dateOfBirth){",
      "occurrence": 0,
      "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization."
+     ],
+     "anchor": "public class Patient {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
     }
    ]
   },
@@ -656,7 +776,9 @@
      "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
      "anchor": "private static final long serialVersionUID = 1L;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization nên đã xóa serialVersionUID."
     }
    ]
   },
@@ -692,9 +814,10 @@
       " * @author algori07",
       " */"
      ],
-     "anchor": "public class Record implements Serializable {",
+     "anchor": "public class Record {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 3 (02/11/2026)"
     },
     {
      "kind": "trail",
@@ -709,7 +832,24 @@
      "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
      "anchor": "private static final long serialVersionUID = 1L;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization nên đã xóa serialVersionUID."
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization."
+     ],
+     "anchor": "public class Record {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
     }
    ]
   },
@@ -888,9 +1028,10 @@
       " * @author ACER",
       " */"
      ],
-     "anchor": "public abstract class User implements Serializable {",
+     "anchor": "public abstract class User {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 3 (02/11/2026)"
     },
     {
      "kind": "trail",
@@ -905,7 +1046,9 @@
      "original": "public abstract class User implements Serializable { //abstract class, phải chọn luôn một vị trí chức vụ. //có điều chỉnh với cách viết ban đầu: thêm implements Serializable",
      "anchor": "public abstract class User implements Serializable {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ implements Serializable; phần ghi chú abstract class được tách thành entry mới."
     },
     {
      "kind": "trail",
@@ -920,7 +1063,9 @@
      "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
      "anchor": "private static final long serialVersionUID = 1L;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization nên đã xóa serialVersionUID."
     },
     {
      "kind": "block",
@@ -949,6 +1094,37 @@
      "anchor": "public void setUserName(String userName){",
      "occurrence": 0,
      "gap": 0
+    },
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//abstract class, phải chọn luôn một vị trí chức vụ."
+     ],
+     "anchor": "public abstract class User {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)",
+     "original": "public abstract class User { //abstract class, phải chọn luôn một vị trí chức vụ."
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization."
+     ],
+     "anchor": "public abstract class User {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
     }
    ]
   },
@@ -984,9 +1160,10 @@
       " * @author ACER",
       " */"
      ],
-     "anchor": "public class VisitSegment implements Serializable {",
+     "anchor": "public class VisitSegment {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 3 (02/11/2026)"
     },
     {
      "kind": "trail",
@@ -1001,7 +1178,24 @@
      "original": "    private static final long serialVersionUID = 1L; //có điều chỉnh với cách viết ban đầu: thêm để lưu bằng serialization",
      "anchor": "private static final long serialVersionUID = 1L;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ serialization nên đã xóa serialVersionUID."
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization."
+     ],
+     "anchor": "public class VisitSegment {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
     }
    ]
   },
@@ -1085,7 +1279,9 @@
      ],
      "anchor": "return value.trim();",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 4: kiểm tra chuyển vào util.Validator."
     },
     {
      "kind": "block",
@@ -1201,6 +1397,21 @@
      "anchor": "public void loadData(List<User> list) {",
      "occurrence": 0,
      "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 4): kiểm tra rỗng / '?' / \"0\" của username dùng chung util.Validator."
+     ],
+     "anchor": "String cleanUserName = Validator.requireName(userName, \"Username\");",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
     }
    ]
   },
@@ -1246,7 +1457,9 @@
      ],
      "anchor": "if (name.contains(\"?\") || name.trim().equals(\"0\")) {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 4: kiểm tra tên chuyển vào util.Validator.requireName."
     },
     {
      "kind": "block",
@@ -1272,9 +1485,10 @@
      "text": [
       "        //có điều chỉnh với cách viết ban đầu (đợt 2): ID ẩn dạng dep-N (chữ thường, không nhúng tên khoa)"
      ],
-     "anchor": "String newId = \"dep-\" + _idCounter;",
+     "anchor": "String newId = _ids.next();",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 4 (02/11/2026)"
     },
     {
      "kind": "block",
@@ -1303,7 +1517,24 @@
      "original": "        _idCounter = max + 1;   // danh sách rỗng -> max = 0 -> counter = 1",
      "anchor": "_idCounter = max + 1;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 4: tính bộ đếm chuyển vào util.IdGenerator.resetAfter."
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 4): dùng util.IdGenerator thay cho biến đếm idCounter tự quản lý."
+     ],
+     "anchor": "private final IdGenerator _ids;",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
     }
    ]
   },
@@ -1391,9 +1622,10 @@
      "text": [
       "    // Kiểm tra tên hợp lệ, trả về tên đã trim. Dùng chung cho register và update."
      ],
-     "anchor": "private String checkName(String name) throws InvalidInputException {",
+     "anchor": "public String checkName(String name) throws InvalidInputException {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 3 (02/11/2026)"
     },
     {
      "kind": "block",
@@ -1407,7 +1639,9 @@
      ],
      "anchor": "if (name.contains(\"?\") || name.trim().equals(\"0\")) {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 4: kiểm tra tên chuyển vào util.Validator.requireName (ghi chú giống DepartmentService, đã chuyển một bản sang Validator)."
     },
     {
      "kind": "block",
@@ -1433,9 +1667,10 @@
      "text": [
       "        // So sánh không dấu, không phân biệt hoa/thường: \"van\" tìm được \"Nguyễn Văn A\"."
      ],
-     "anchor": "String cleanKeyword = TextUtils.cleanName(keyword);",
+     "anchor": "if (TextUtils.containsKeyword(p.getName(), keyword)) {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 4 (02/11/2026)"
     },
     {
      "kind": "block",
@@ -1450,6 +1685,51 @@
      "anchor": "public void loadData(List<Patient> list) {",
      "occurrence": 0,
      "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): dùng để kiểm tra trùng khi New visit: trùng khi tên đã chuẩn hóa (cleanName: bỏ dấu, bỏ khoảng trắng, chữ thường) VÀ ngày sinh bằng nhau."
+     ],
+     "anchor": "public List<Patient> findByNameAndDateOfBirth(String name, LocalDate dateOfBirth) {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): ngày sinh bắt buộc (trước đây null được bỏ qua); checkName/checkDateOfBirth đổi sang public để UI hỏi lại ngay khi nhập sai."
+     ],
+     "anchor": "public void checkDateOfBirth(LocalDate dateOfBirth) throws InvalidInputException {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 4): dùng util.IdGenerator thay cho biến đếm idCounter tự quản lý."
+     ],
+     "anchor": "private final IdGenerator _ids;",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
     }
    ]
   },
@@ -1615,7 +1895,88 @@
      ],
      "anchor": "int maxId = 0;",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 4: tính bộ đếm chuyển vào util.IdGenerator.resetAfter."
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 3): bỏ import model.* / java.util.* vì từ JDK 16 có java.lang.Record trùng tên với model.Record",
+      "// (lỗi 'reference to Record is ambiguous' nếu không biên dịch với --release 8). Bỏ hasRecordsForPatient vì không còn dùng."
+     ],
+     "anchor": "import exception.DuplicateDataException;",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): bệnh nhân mới luôn được tạo cùng với lượt khám. Kiểm tra khoa và mức ưu tiên TRƯỚC khi tạo bệnh nhân,",
+      "        // nên không bao giờ có bệnh nhân không có record."
+     ],
+     "anchor": "public String registerNewPatientVisit(",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): vì bệnh nhân nào cũng có record, Remove patient chỉ được phép khi mọi lượt khám của bệnh nhân còn WAITING;",
+      "        // các lượt đó bị xóa khỏi danh sách và khỏi hàng đợi của khoa trước khi xóa bệnh nhân."
+     ],
+     "anchor": "public void removePatientWithWaitingVisits(String patientId)",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 4): dùng util.IdGenerator thay cho biến đếm idCounter tự quản lý."
+     ],
+     "anchor": "private final IdGenerator ids;",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 4): lấy lượt khám gần nhất của bệnh nhân để hiện ở bảng 'visited before'.",
+      "        // Dùng !isBefore (bằng hoặc muộn hơn): thời gian lưu file tới giây nên hai lượt cùng giây sẽ bằng nhau; khi đó lượt tạo sau (đứng sau trong danh sách) được chọn."
+     ],
+     "anchor": "public Record findLastVisit(String patientId)",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
     }
    ]
   },
@@ -2017,10 +2378,11 @@
      "text": [
       "//static có nghĩa là chỉ có 1, tạo nhiều biến class thì cũng chỉ có một cái này, ngoài ra thì void mà có static thì không cần khởi tạo một biến class để sử dụng mà có thể truy cập trực tiếp."
      ],
-     "original": "    private static final Scanner SC = new Scanner(System.in); //static có nghĩa là chỉ có 1, tạo nhiều biến class thì cũng chỉ có một cái này, ngoài ra thì void mà có static thì không cần khởi tạo một biến class để sử dụng mà có thể truy cập trực tiếp.",
-     "anchor": "private static final Scanner SC = new Scanner(System.in);",
+     "original": "    private static final Scanner SC = new Scanner(new InputStreamReader(System.in, CONSOLE_CHARSET)); //static có nghĩa là chỉ có 1, tạo nhiều biến class thì cũng chỉ có một cái này, ngoài ra thì void mà có static thì không cần khởi tạo một biến class để sử dụng mà có thể truy cập trực tiếp.",
+     "anchor": "private static final Scanner SC = new Scanner(new InputStreamReader(System.in, CONSOLE_CHARSET));",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 3 (02/11/2026)"
     },
     {
      "kind": "trail",
@@ -2095,6 +2457,53 @@
      "anchor": "SC.nextLine();",
      "occurrence": 0,
      "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): đọc bàn phím và in màn hình bằng bảng mã cố định (mặc định UTF-8, đổi được bằng -Dconsole.encoding=...).",
+      "    // Trước đây new Scanner(System.in) và System.out dùng bảng mã mặc định của JVM. Bảng mã này đổi theo phiên bản JDK (JDK 18+ mặc định UTF-8, JDK 19+ System.out theo stdout.encoding)",
+      "    // và thường khác bảng mã của console Windows/NetBeans -> gõ 'Bác Sĩ Nhi' bị thành 'B c S? Nhi'. Lỗi xảy ra lúc nhập, không phải do serialization."
+     ],
+     "anchor": "private static final Charset CONSOLE_CHARSET = resolveCharset();",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): gọi đầu tiên trong main để System.out in ra bằng cùng bảng mã với Scanner."
+     ],
+     "anchor": "public static void setup() {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 4): bỏ formatDate / formatDateTime / parseDate, chuyển sang util.DateUtils; ConsoleIO chỉ còn nhập xuất."
+     ],
+     "anchor": "public class ConsoleIO {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
     }
    ]
   },
@@ -2230,10 +2639,11 @@
      "text": [
       "//có điều chỉnh với cách viết ban đầu (đợt 2): định dạng HH:mm dd/MM/yyyy"
      ],
-     "original": "                System.out.println(\"Patient's visit time: \" + ConsoleIO.formatDateTime(record.getVisitTime())); //có điều chỉnh với cách viết ban đầu (đợt 2): định dạng HH:mm dd/MM/yyyy",
-     "anchor": "System.out.println(\"Patient's visit time: \" + ConsoleIO.formatDateTime(record.getVisitTime()));",
+     "original": "                System.out.println(\"Patient's visit time: \" + DateUtils.format(record.getVisitTime())); //có điều chỉnh với cách viết ban đầu (đợt 2): định dạng HH:mm dd/MM/yyyy",
+     "anchor": "System.out.println(\"Patient's visit time: \" + DateUtils.format(record.getVisitTime()));",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 4 (02/11/2026)"
     },
     {
      "kind": "block",
@@ -2289,10 +2699,11 @@
      "text": [
       "//có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột Record Id; giờ khám định dạng HH:mm dd/MM/yyyy"
      ],
-     "original": "                ConsoleIO.formatDateTime(record.getVisitTime()) //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột Record Id; giờ khám định dạng HH:mm dd/MM/yyyy",
-     "anchor": "ConsoleIO.formatDateTime(record.getVisitTime())",
+     "original": "                DateUtils.format(record.getVisitTime()) //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ cột Record Id; giờ khám định dạng HH:mm dd/MM/yyyy",
+     "anchor": "DateUtils.format(record.getVisitTime())",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "reanchored": "đợt 4 (02/11/2026)"
     },
     {
      "kind": "trail",
@@ -2396,7 +2807,9 @@
      "original": "        return ConsoleIO.parseDate(value).atStartOfDay(); //có điều chỉnh với cách viết ban đầu (đợt 2): ngày nhập theo dd/MM/yyyy, dùng chung ConsoleIO.parseDate",
      "anchor": "return ConsoleIO.parseDate(value).atStartOfDay();",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 4: parseDate chuyển sang util.DateUtils."
     },
     {
      "kind": "trail",
@@ -2412,6 +2825,36 @@
      "anchor": "department == null ? record.getCurrentDepartmentId() : department.getName()",
      "occurrence": 0,
      "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 3): bỏ import model.* / service.* / java.util.* / java.io.* (java.io không dùng) vì java.lang.Record (JDK 16+) trùng tên với model.Record."
+     ],
+     "anchor": "import exception.InvalidInputException;",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2, sửa ở đợt 4): ngày nhập theo dd/MM/yyyy, dùng chung DateUtils.parseDate"
+     ],
+     "anchor": "return DateUtils.parseDate(value).atStartOfDay();",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
     }
    ]
   },
@@ -2465,6 +2908,21 @@
      "anchor": "new MainMenu().start();",
      "occurrence": 0,
      "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 3): chuyển System.out sang UTF-8 trước khi in bất cứ thứ gì."
+     ],
+     "anchor": "ConsoleIO.setup();",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
     }
    ]
   },
@@ -2530,7 +2988,9 @@
      ],
      "anchor": "private void loadAll() {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3: settings lưu ở settings.txt."
     },
     {
      "kind": "block",
@@ -2544,7 +3004,9 @@
      ],
      "anchor": "private void saveAll() {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3: settings lưu ở settings.txt."
     }
    ]
   },
@@ -2610,7 +3072,9 @@
      ],
      "anchor": "private void registerPatient() throws InvalidInputException {",
      "occurrence": 0,
-     "gap": 0
+     "gap": 0,
+     "obsolete": true,
+     "obsolete_reason": "Đợt 3 bỏ chức năng 'Register new patient only' (registerPatient)."
     },
     {
      "kind": "block",
@@ -2696,6 +3160,69 @@
      "anchor": "filter.setPatientNameKeyword(ConsoleIO.readLine(\"Patient name keyword (Enter to skip): \"));",
      "occurrence": 0,
      "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): bỏ 'Register new patient only'; mỗi lần đăng ký đều tạo record kèm khoa. Ngày sinh bắt buộc.",
+      "        // Trùng tên chuẩn hóa + ngày sinh: người trùng đang trong hàng đợi -> hỏi có phải bệnh nhân mới (N = hủy);",
+      "        // người trùng đã từng khám -> hỏi có phải cùng người (y = record mới gắn mã cũ, N = bệnh nhân mới mã mới). Nhập sai ở bước nào thì hỏi lại bước đó."
+     ],
+     "anchor": "private void newVisit() throws InvalidInputException, NotFoundException, DuplicateDataException {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): chọn khoa bằng số No. trong bảng (vẫn nhận tên hoặc tên kèm ?); sai thì báo lỗi và hỏi lại, không quay về menu."
+     ],
+     "anchor": "private Department chooseDepartment() {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): chỉ xóa được bệnh nhân chưa từng được khám, xóa luôn lượt khám đang chờ."
+     ],
+     "anchor": "private void removePatient() throws InvalidInputException, NotFoundException {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 4): bảng người trùng 'đã từng khám' có thêm No., Last visit, Last department;",
+      "        // nhiều người trùng thì chọn bằng số ở choosePatient (thay cho Picker.patientFromList)."
+     ],
+     "anchor": "private void printVisitedBefore(List<Patient> patients) {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
     }
    ]
   },
@@ -2734,8 +3261,250 @@
      "anchor": "public class TextUtils {",
      "occurrence": 0,
      "gap": 0
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 4): sameName / containsKeyword thay cho cleanName(a).equals/contains(cleanName(b)) lặp ở 3 service."
+     ],
+     "anchor": "public static boolean sameName(String a, String b) {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
+    }
+   ]
+  },
+  "src/data/TextStorage.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 3): thay cho SerialStorage. Mỗi danh sách lưu thành 1 file .txt UTF-8 (ghi rõ UTF-8 để không phụ thuộc JDK),",
+      "// dòng đầu '# ...' là tên cột, mỗi đối tượng 1 dòng, các trường cách nhau bởi '|'. Ký tự '\\', '|', xuống dòng được ghi thành '\\\\', '\\p', '\\n'.",
+      "// Giữ cách ghi file tạm rồi move (không mất dữ liệu khi lỗi giữa chừng) và đổi tên file hỏng thành *.corrupt như SerialStorage cũ."
+     ],
+     "anchor": "public final class TextStorage {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    }
+   ]
+  },
+  "src/data/UserData.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): lưu users.txt: role|id|userName|password|fullName|active|departmentId|currentRecordId (2 cột cuối chỉ dùng cho DOCTOR)."
+     ],
+     "anchor": "private static final String FILE_NAME = \"users.txt\";",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    }
+   ]
+  },
+  "src/data/SettingsData.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): lưu settings.txt: key|value."
+     ],
+     "anchor": "private static final String FILE_NAME = \"settings.txt\";",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    }
+   ]
+  },
+  "src/model/AppSettings.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 3): bỏ implements Serializable và serialVersionUID vì không còn lưu bằng serialization."
+     ],
+     "anchor": "public class AppSettings {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)"
+    }
+   ]
+  },
+  "src/ui/Picker.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 3,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3): thay patientFromText (không còn dùng) bằng departmentFromText và patientFromList cho luồng New visit mới."
+     ],
+     "anchor": "public static Department departmentFromText(DepartmentService service, String text)",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 3 (02/11/2026)",
+     "obsolete": true,
+     "obsolete_reason": "Đợt 4 bỏ patientFromList; bảng chọn người trùng chuyển vào ReceptionistMenu."
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "    //có điều chỉnh với cách viết ban đầu (đợt 3–4): thay patientFromText (không còn dùng) bằng departmentFromText cho luồng New visit."
+     ],
+     "anchor": "public static Department departmentFromText(DepartmentService service, String text)",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
+    }
+   ]
+  },
+  "src/util/Validator.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 2,
+     "line": 57,
+     "end_line": 57,
+     "stripped_line": 55,
+     "text": [
+      "        //có điều chỉnh với cách viết ban đầu (đợt 2): bỏ kiểm tra ký tự '|' (chỉ cần cho file txt cũ); thêm cấm '?' và \"0\" vì dùng để tìm kiếm / hủy khi chọn theo tên"
+     ],
+     "anchor": "if (text.contains(\"?\") || text.equals(\"0\")) {",
+     "occurrence": 0,
+     "gap": 0,
+     "moved_from": "src/service/DepartmentService.java",
+     "reanchored": "đợt 4 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 4): gom các kiểm tra trước đây lặp ở AuthService, DepartmentService, PatientService: không rỗng,",
+      "// không chứa '?' và không là \"0\", ngày không ở tương lai và không trước 1900. Thông báo lỗi giữ nguyên chữ như cũ (nhãn truyền vào)."
+     ],
+     "anchor": "public final class Validator {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
+    }
+   ]
+  },
+  "src/util/IdGenerator.java": {
+   "entries": [
+    {
+     "kind": "trail",
+     "category": "note",
+     "round": 0,
+     "line": 128,
+     "end_line": 128,
+     "stripped_line": 122,
+     "text": [
+      "// danh sách rỗng -> max = 0 -> counter = 1"
+     ],
+     "original": "        nextNumber = max + 1; // danh sách rỗng -> max = 0 -> counter = 1",
+     "anchor": "nextNumber = max + 1;",
+     "occurrence": 0,
+     "gap": 0,
+     "moved_from": "src/service/DepartmentService.java",
+     "reanchored": "đợt 4 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 1,
+     "line": 293,
+     "end_line": 295,
+     "stripped_line": 280,
+     "text": [
+      "        // //có điều chỉnh với cách viết ban đầu: bản đầu đặt idCounter = maxId (không +1) nên Record mới sau khi nạp file",
+      "        // bị TRÙNG ID với Record cuối cùng; Integer.parseInt cũng ném NumberFormatException nếu ID lạ.",
+      "        // Nay dùng TextUtils.extractCounter (an toàn) và cộng thêm 1 theo quy ước A4."
+     ],
+     "anchor": "int max = 0;",
+     "occurrence": 0,
+     "gap": 0,
+     "moved_from": "src/service/RecordService.java",
+     "reanchored": "đợt 4 (02/11/2026)"
+    },
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 4): gom phần cấp mã dep-N / pat-N / vis-N trước đây viết lặp ở DepartmentService, PatientService, RecordService",
+      "// (bộ đếm, getNextNumber, ensureNextNumberAtLeast, tính lại = số lớn nhất + 1 sau khi nạp file). Mỗi service giữ một IdGenerator với tiền tố riêng."
+     ],
+     "anchor": "public class IdGenerator {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
+    }
+   ]
+  },
+  "src/util/DateUtils.java": {
+   "entries": [
+    {
+     "kind": "block",
+     "category": "adjustment",
+     "round": 4,
+     "line": 0,
+     "end_line": 0,
+     "stripped_line": 0,
+     "text": [
+      "//có điều chỉnh với cách viết ban đầu (đợt 4): chuyển định dạng / parse ngày từ ConsoleIO sang util vì đây không phải nhập xuất màn hình;",
+      "// thêm toStorage / dateFromStorage / timeFromStorage (ISO, tới giây) dùng chung cho PatientData và RecordData."
+     ],
+     "anchor": "public final class DateUtils {",
+     "occurrence": 0,
+     "gap": 0,
+     "added": "đợt 4 (02/11/2026)"
     }
    ]
   }
- }
+ },
+ "note_round3": "Đợt 3 (02/11/2026): entry có \"obsolete\": true là ghi chú cũ không còn đúng với code (bị bỏ qua khi restore); entry có \"added\" là ghi chú mới của đợt 3; \"reanchored\" là entry cũ được gắn lại vào dòng code mới.",
+ "note_round4": "Đợt 4 (02/11/2026): tách IdGenerator, Validator, DateUtils vào util; entry \"moved_from\" là ghi chú cũ được chuyển theo code sang file util."
 }

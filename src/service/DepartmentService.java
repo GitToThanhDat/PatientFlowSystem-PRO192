@@ -6,16 +6,18 @@ import exception.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Department;
+import util.IdGenerator;
 import util.TextUtils;
+import util.Validator;
 
 public class DepartmentService {
 
     private final List<Department> _departmentList;
-    private int _idCounter;
+    private final IdGenerator _ids;
 
     public DepartmentService() {
         _departmentList = new ArrayList<>();
-        _idCounter = 1;
+        _ids = new IdGenerator("dep");
     }
 
     public Department findById(String id) {
@@ -28,9 +30,8 @@ public class DepartmentService {
     }
 
     public Department findByName(String name) {
-        String key = TextUtils.cleanName(name);
         for (Department dept : _departmentList) {
-            if (TextUtils.cleanName(dept.getName()).equals(key)) {
+            if (TextUtils.sameName(dept.getName(), name)) {
                 return dept;
             }
         }
@@ -38,10 +39,9 @@ public class DepartmentService {
     }
 
     public List<Department> searchByName(String keyword) {
-        String key = TextUtils.cleanName(keyword);
         List<Department> result = new ArrayList<>();
         for (Department dept : _departmentList) {
-            if (TextUtils.cleanName(dept.getName()).contains(key)) {
+            if (TextUtils.containsKeyword(dept.getName(), keyword)) {
                 result.add(dept);
             }
         }
@@ -49,13 +49,7 @@ public class DepartmentService {
     }
 
     private String checkName(String name) throws InvalidInputException {
-        if (name == null || name.trim().isEmpty()) {
-            throw new InvalidInputException("Department name must not be empty.");
-        }
-        if (name.contains("?") || name.trim().equals("0")) {
-            throw new InvalidInputException("Department name must not contain '?' and must not be '0'.");
-        }
-        return name.trim();
+        return Validator.requireName(name, "Department name");
     }
 
     public String addDepartment(String name)
@@ -67,9 +61,8 @@ public class DepartmentService {
                     "Department '" + cleanName + "' already exists.");
         }
 
-        String newId = "dep-" + _idCounter;
+        String newId = _ids.next();
         _departmentList.add(new Department(newId, cleanName));
-        _idCounter++;
         return newId;
     }
 
@@ -102,23 +95,21 @@ public class DepartmentService {
     }
 
     public int getNextNumber() {
-        return _idCounter;
+        return _ids.getNextNumber();
     }
 
     public void ensureNextNumberAtLeast(int number) {
-        if (number > _idCounter) {
-            _idCounter = number;
-        }
+        _ids.ensureNextNumberAtLeast(number);
     }
 
     public void loadData(List<Department> list) {
         _departmentList.clear();
         _departmentList.addAll(list);
 
-        int max = 0;
+        List<String> ids = new ArrayList<>();
         for (Department d : _departmentList) {
-            max = Math.max(max, TextUtils.extractCounter(d.getId()));
+            ids.add(d.getId());
         }
-        _idCounter = max + 1;
+        _ids.resetAfter(ids);
     }
 }

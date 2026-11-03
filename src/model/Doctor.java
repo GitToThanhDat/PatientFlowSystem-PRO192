@@ -1,7 +1,6 @@
 package model;
 
 public class Doctor extends User{
-    private static final long serialVersionUID = 1L;
     private String departmentId;
     private String currentRecordId;
     
