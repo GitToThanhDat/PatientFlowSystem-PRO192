@@ -1,0 +1,13 @@
+# RECORD|id|patientId|status|priority|currentDepartmentId|visitTime  /  SEGMENT|recordId|CURRENT or HISTORY|departmentId|doctorId|examResults|diagnosis|testOrder|startTime|endTime
+RECORD|vis-1|pat-1|DONE|NORMAL|dep-1|2026-11-05T17:20:37
+SEGMENT|vis-1|HISTORY|dep-1|doctor||Cum A||2026-11-05T17:21:01|2026-11-05T17:21:03
+RECORD|vis-2|pat-2|DONE|EMERGENCY|dep-1|2026-11-05T17:20:38
+SEGMENT|vis-2|HISTORY|dep-1|doctor||Viem hong \p theo doi||2026-11-05T17:21:14|2026-11-05T17:21:15
+RECORD|vis-4|pat-4|WAITING|NORMAL|dep-2|2026-11-05T17:20:44
+RECORD|vis-5|pat-5|DONE|URGENT|dep-1|2026-11-05T17:20:55
+SEGMENT|vis-5|HISTORY|dep-1|doctor||Tai kham sau 2 tuan||2026-11-05T17:21:15|2026-11-05T17:21:16
+RECORD|vis-6|pat-1|DONE|URGENT|dep-1|2026-11-05T17:21:10
+SEGMENT|vis-6|HISTORY|dep-1|doctor||Cum B||2026-11-05T17:21:32|2026-11-05T17:21:37
+RECORD|vis-7|pat-6|WAITING|NORMAL|dep-1|2026-11-05T17:21:12
+RECORD|vis-8|pat-7|WAITING|NORMAL|dep-3|2026-11-05T17:21:28
+RECORD|vis-9|pat-8|WAITING|NORMAL|dep-1|2026-11-05T17:21:42

@@ -1,0 +1,8 @@
+# id|name|dateOfBirth(yyyy-MM-dd)|recordIds
+pat-1|Nguyen Van A|1990-03-15|vis-1,vis-6
+pat-2|Tran Thi B|1995-09-02|vis-2
+pat-4|Le Van Cuong|1991-07-07|vis-4
+pat-5|Pham Thi D|1995-02-02|vis-5
+pat-6|Hoang Van E|2010-05-20|vis-7
+pat-7|Vo Thi G|1988-12-12|vis-8
+pat-8|Bui Van H|1985-03-03|vis-9

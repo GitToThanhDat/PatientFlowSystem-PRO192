@@ -1,0 +1,4 @@
+# id|name|waitingQueue
+dep-1|General|vis-7,vis-9
+dep-2|Nhi|vis-4
+dep-3|Tim Mach San|vis-8

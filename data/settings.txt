@@ -1,0 +1,5 @@
+# key|value
+queueStrategy|Priority
+nextDepartmentNumber|5
+nextPatientNumber|9
+nextRecordNumber|10

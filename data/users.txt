@@ -1,0 +1,6 @@
+# role|id|userName|password|fullName|active|departmentId|currentRecordId
+ADMIN|admin|admin|admin123|System Admin|true||
+RECEPTIONIST|reception|reception|reception123|Front Desk|true||
+DOCTOR|doctor|doctor|doctor123|General Doctor|true|dep-1|
+DOCTOR|bsnhi|bsnhi|bs123|Bac Si Nhi|true|dep-3|
+DOCTOR|bsmoi|bsmoi|bsmoi123|Bac Si Moi|true||
