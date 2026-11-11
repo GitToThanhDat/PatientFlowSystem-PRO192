@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
-/**
- *
- * @author ACER
- */
 public class RecordFilter{
 
-    private String patientId;
-    private String patientNameKeyword;
-    private LocalDateTime visitDate;
-    private RecordStatus status;
-    private String departmentId;
+    private String patientId = null;
+    private String patientNameKeyword = null;
+    private LocalDateTime visitDate = null;
+    private RecordStatus status = null;
+    private String departmentId = null;
 
     public RecordFilter(){}
 

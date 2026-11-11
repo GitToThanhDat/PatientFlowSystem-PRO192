@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package util;
 
-/**
- *
- * @author ACER
- */
 public class TextUtils {
     private TextUtils() {
     }
@@ -24,6 +16,25 @@ public class TextUtils {
         noAccent = noAccent.replace("\u0111", "d"); 
         noAccent = noAccent.replace("\u0110", "D"); 
         return noAccent.replace(" ", "").toLowerCase();
+    }
+    
+    public static boolean sameName(String a, String b) {
+        return cleanName(a).equals(cleanName(b));
+    }
+
+    public static boolean containsKeyword(String text, String keyword) {
+        return cleanName(text).contains(cleanName(keyword));
+    }
+
+    public static int extractCounter(String id){
+        if (id==null) return 0;
+        int idx = id.lastIndexOf('-');
+        if (idx<0 || idx==id.length()-1) return 0;
+        try{
+            return Integer.parseInt(id.substring(idx+1));
+        } catch (NumberFormatException e){
+            return 0;
+        }
     }
 
 }

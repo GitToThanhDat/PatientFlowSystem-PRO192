@@ -1,14 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author ACER
- */
-public class User {
+
+public abstract class User {
     private String id;
     private Role role;
     private String userName;
@@ -24,7 +17,6 @@ public class User {
         this.role=role;
         this.userName=userName;
     }
-    //Get
     public String getId(){
         return this.id;
     }
@@ -43,7 +35,6 @@ public class User {
     public boolean isActivate(){
         return this.isActivate;
     }
-    //Set
     public void setUserName(String userName){
         this.userName=userName;
     }

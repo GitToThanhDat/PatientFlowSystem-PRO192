@@ -1,116 +1,115 @@
 package service;
 
+import exception.DuplicateDataException;
+import exception.InvalidInputException;
+import exception.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Department;
+import util.IdGenerator;
 import util.TextUtils;
+import util.Validator;
 
 public class DepartmentService {
 
     private final List<Department> _departmentList;
-    private int _idCounter;
+    private final IdGenerator _ids;
 
     public DepartmentService() {
         _departmentList = new ArrayList<>();
-        _idCounter = 1;
+        _ids = new IdGenerator("dep");
     }
 
-    // Hàm tìm kiếm dùng chung nội bộ  
     public Department findById(String id) {
         for (Department dept : _departmentList) {
-            if (dept.getId().equalsIgnoreCase(id)) {
+            if (dept.getId().equals(id)) {
                 return dept;
             }
         }
         return null;
     }
 
-    // validate -> kiểm tra trùng -> thao tác -> thông báo
-    public String addDepartment(String name) {
-        // Validate
-        if (name == null || name.trim().isEmpty()) {
-            System.out.println("Loi: Ten phong ban khong duoc de trong.");
-            return null;
-        }
-
-        // Kiểm tra trùng tên
+    public Department findByName(String name) {
         for (Department dept : _departmentList) {
-            if (dept.getName().equalsIgnoreCase(name)) {
-                System.out.println("Loi: Ten phong ban '" + name + "' da ton tai.");
-                return null;
+            if (TextUtils.sameName(dept.getName(), name)) {
+                return dept;
             }
         }
+        return null;
+    }
 
-        // Sinh id và tạo đối tượng mới.
-        String cleanedName = TextUtils.cleanName(name);
-        String newId = "DEPT-" + cleanedName + "-" + _idCounter;
-        Department newDept = new Department(newId, name);
-        _departmentList.add(newDept);
-        _idCounter++;
+    public List<Department> searchByName(String keyword) {
+        List<Department> result = new ArrayList<>();
+        for (Department dept : _departmentList) {
+            if (TextUtils.containsKeyword(dept.getName(), keyword)) {
+                result.add(dept);
+            }
+        }
+        return result;
+    }
 
-        // Thông báo và trả về id.
-        System.out.println("Da them phong ban '" + name + "' voi id: " + newId);
+    private String checkName(String name) throws InvalidInputException {
+        return Validator.requireName(name, "Department name");
+    }
+
+    public String addDepartment(String name)
+            throws InvalidInputException, DuplicateDataException {
+        String cleanName = checkName(name);
+
+        if (findByName(cleanName) != null) {
+            throw new DuplicateDataException(
+                    "Department '" + cleanName + "' already exists.");
+        }
+
+        String newId = _ids.next();
+        _departmentList.add(new Department(newId, cleanName));
         return newId;
     }
 
-    public boolean updateDepartment(String id, String newName) {
+    public void updateDepartment(String id, String newName)
+            throws NotFoundException, InvalidInputException, DuplicateDataException {
         Department dept = findById(id);
         if (dept == null) {
-            System.out.println("Loi: Khong tim thay phong ban co id: " + id);
-            return false;
+            throw new NotFoundException("Department not found.");
         }
-        dept.setName(newName);
-        System.out.println("Da cap nhat phong ban " + id + " thanh ten: " + newName);
-        return true;
+        String cleanName = checkName(newName);
+
+        Department same = findByName(cleanName);
+        if (same != null && same != dept) {
+            throw new DuplicateDataException(
+                    "Department '" + cleanName + "' already exists.");
+        }
+        dept.setName(cleanName);
     }
 
-    public boolean remove(String id) {
+    public void remove(String id) throws NotFoundException {
         Department dept = findById(id);
         if (dept == null) {
-            System.out.println("Loi: Khong tim thay phong ban co id: " + id);
-            return false;
+            throw new NotFoundException("Department not found.");
         }
         _departmentList.remove(dept);
-        System.out.println("Da xoa phong ban co id: " + id);
-        return true;
     }
 
     public List<Department> getAll() {
         return _departmentList;
     }
 
-    // test nhé.
-    public static void main(String[] args) {
-        DepartmentService service = new DepartmentService();
+    public int getNextNumber() {
+        return _ids.getNextNumber();
+    }
 
-        // Test addDepartment
-        String id1 = service.addDepartment("San Phu Khoa");
-        String id2 = service.addDepartment("Noi Tong Quat");
+    public void ensureNextNumberAtLeast(int number) {
+        _ids.ensureNextNumberAtLeast(number);
+    }
 
-        // Test thêm trùng tên báo lỗi và trả về null
-        service.addDepartment("san phu khoa");
+    public void loadData(List<Department> list) {
+        _departmentList.clear();
+        _departmentList.addAll(list);
 
-        // Test findById
-        Department found = service.findById(id1);
-        System.out.println("Tim thay: " + (found != null ? found.getName() : "null"));
-
-        // Test updateDepartment
-        service.updateDepartment(id2, "Noi Tong Hop");
-
-        // Test updateDepartment với id không tồn tại
-        service.updateDepartment("DEPT-khongton-99", "Ten moi");
-
-        // Test getAll
-        System.out.println("Danh sach phong ban:");
-        for (Department d : service.getAll()) {
-            System.out.println("  " + d.getId() + " - " + d.getName());
+        List<String> ids = new ArrayList<>();
+        for (Department d : _departmentList) {
+            ids.add(d.getId());
         }
-
-        // Test remove
-        service.remove(id1);
-        System.out.println("Sau khi xoa, con lai:");
-        for (Department d : service.getAll()) {
-            System.out.println("  " + d.getId() + " - " + d.getName());
-        }
+        _ids.resetAfter(ids);
     }
 }

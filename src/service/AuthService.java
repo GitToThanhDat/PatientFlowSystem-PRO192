@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package service;
+import exception.AuthenticationException;
+import exception.DuplicateDataException;
+import exception.InvalidInputException;
+import exception.NotFoundException;
 import java.util.List;
 import java.util.ArrayList;
 import model.Admin;
@@ -11,89 +11,167 @@ import model.Receptionist;
 import model.User;
 import model.Role;
 import util.TextUtils;
+import util.Validator;
 
-/**
- *
- * @author ACER
- */
 public class AuthService {
-    private List<User> _userList;
-    private int _idCounter;
-    
-    public AuthService(){
+    private final List<User> _userList;
+    private final DepartmentService _departmentService;
+
+    public AuthService(DepartmentService departmentService){
         this._userList= new ArrayList<>() ;
-        this._idCounter=1;
+        this._departmentService = departmentService;
     }
-    
+
     public User findById(String id){
         for (User u : this._userList){
             if(u.getId().equals(id)) return u;
         }
         return null;
     }
-    
-    public String register(
-            Role role, 
-            String userName, 
-            String password, 
-            String fullName){
-        
-        if (role ==null || userName ==null || password == null || fullName == null) return null;
-        
-        for (User u: this._userList){
-            if (u.getUserName().equalsIgnoreCase(userName)){
-                System.out.println("This username is already used.");
-                return null;
+
+    public User findByUserName(String userName){
+        if (userName == null) return null;
+        for (User u : this._userList){
+            if(u.getUserName().equalsIgnoreCase(userName.trim())) return u;
+        }
+        return null;
+    }
+
+    public boolean exists(String userName){
+        return findByUserName(userName) != null;
+    }
+
+    public List<User> search(String keyword){
+        List<User> result = new ArrayList<>();
+        for (User u : this._userList){
+            if (TextUtils.containsKeyword(u.getUserName(), keyword)
+                    || TextUtils.containsKeyword(u.getFullName(), keyword)) {
+                result.add(u);
             }
         }
-        String id = "USR-" + TextUtils.cleanName(fullName) +"-"+ _idCounter++;
+        return result;
+    }
+
+    public String register(
+            Role role,
+            String userName,
+            String password,
+            String fullName) throws InvalidInputException, DuplicateDataException{
+
+        if (role == null) {
+            throw new InvalidInputException("Role must not be null.");
+        }
+        String cleanUserName = Validator.requireName(userName, "Username");
+        String cleanPassword = Validator.requireText(password, "Password");
+        String cleanFullName = Validator.requireText(fullName, "Full name");
+
+        if (findByUserName(cleanUserName) != null){
+            throw new DuplicateDataException("Username '" + cleanUserName + "' already exists.");
+        }
+        String id = cleanUserName;
         switch (role){
             case DOCTOR:
-                Doctor doctor = new Doctor(id, userName, password, fullName, false, null);
+                Doctor doctor = new Doctor(id, cleanUserName, cleanPassword, cleanFullName, true, null);
                 this._userList.add(doctor);
                 break;
             case RECEPTIONIST:
-                Receptionist recep  = new Receptionist(id, userName, password, fullName, false);
+                Receptionist recep  = new Receptionist(id, cleanUserName, cleanPassword, cleanFullName, true);
                 this._userList.add(recep);
                 break;
             case ADMIN:
-                Admin ad =new Admin(id, userName, password, fullName, false);
+                Admin ad =new Admin(id, cleanUserName, cleanPassword, cleanFullName, true);
                 this._userList.add(ad);
                 break;
         }
-        System.out.println("Register successfully and your own id is: "+id); //Đồng bộ thông báo và gỡ bỏ việc thông báo cho cả team.
         return id;
     }
-    
-    public User login(String userName, String password){ //Hàmm này sẽ trả về null còn việc thông báo trong exception sẽ là username hoặc password sai chứ không chỉ rõ.
-        if (userName == null || password == null) return null;
-        for(User u : this._userList){
-            if (u.getUserName().equals(userName) && u.getPassword().equals(password)){
-                u.setActivate(true);
-                return u;
+
+    public User login(String userName, String password) throws AuthenticationException{
+        if (userName == null || password == null) {
+            throw new AuthenticationException("Username and password must not be empty.");
+        }
+        User u = findByUserName(userName);
+        if (u == null) {
+            throw new AuthenticationException("Account '" + userName.trim() + "' does not exist.");
+        }
+        if (!u.getPassword().equals(password)) {
+            throw new AuthenticationException("Incorrect password.");
+        }
+        if (!u.isActivate()) {
+            throw new AuthenticationException("Account '" + u.getUserName()
+                    + "' has been deactivated. Please contact an administrator.");
+        }
+        return u;
+    }
+
+    public void updateAccount(String userName, String newFullName) throws NotFoundException, InvalidInputException
+    {
+        User u = findByUserName(userName);
+        if (u == null) {
+            throw new NotFoundException("Account '" + userName + "' not found.");
+        }
+        u.setFullName(Validator.requireText(newFullName, "Full name"));
+    }
+
+    public void deactivateAccount(String userName) throws NotFoundException {
+        User u= findByUserName(userName);
+        if (u == null) {
+            throw new NotFoundException("Account '" + userName + "' not found.");
+        }
+        u.setActivate(false);
+    }
+
+    public void activateAccount(String userName) throws NotFoundException {
+        User u = findByUserName(userName);
+        if (u == null) {
+            throw new NotFoundException("Account '" + userName + "' not found.");
+        }
+        u.setActivate(true);
+    }
+
+    public void deleteAccount(String userName) throws NotFoundException {
+        User u = findByUserName(userName);
+        if (u == null) {
+            throw new NotFoundException("Account '" + userName + "' not found.");
+        }
+        this._userList.remove(u);
+    }
+
+    public int countDoctorsInDepartment(String departmentId) {
+        int count = 0;
+        for (User u : this._userList) {
+            if (u instanceof Doctor && departmentId != null
+                    && departmentId.equals(((Doctor) u).getDepartmentId())) {
+                count++;
             }
         }
-        return null;    
+        return count;
     }
-    public boolean updateAccountFullName(String id, String newFullName){
-        User u = findById(id);
-        if (u!=null) {
-            u.setFullName(newFullName);
-            return true;
+
+    public void assignDoctorToDepartment(String userName, String departmentId)
+            throws NotFoundException, InvalidInputException {
+        User u = findByUserName(userName);
+        if (u == null) {
+            throw new NotFoundException("Account '" + userName + "' not found.");
         }
-        return false;
-    }
-    
-    public boolean deActivateAccount(String id){
-        User u= findById(id);
-        if (u!=null){
-            u.setActivate(false);
-            return true;
+        if (!(u instanceof Doctor)) {
+            throw new InvalidInputException("Account '" + u.getUserName() + "' is a "
+                    + u.getRole() + ", not a DOCTOR. Only doctors can be assigned to a department.");
         }
-        return false;
+        if (_departmentService.findById(departmentId) == null) {
+            throw new NotFoundException("Department not found.");
+        }
+        ((Doctor) u).setDepartmentId(departmentId);
     }
-    
+
     public List<User> getAll(){
         return this._userList;
+    }
+
+    public void loadData(List<User> list) {
+        this._userList.clear();
+        if (list != null) {
+            this._userList.addAll(list);
+        }
     }
 }

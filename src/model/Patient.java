@@ -1,24 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-/**
- *
- * @author ACER
- */
 public class Patient {
     
     private final String id;
     private String name;
+    private LocalDate dateOfBirth;
     private final List<String> recordIds;
     
-    public Patient(String id, String name){
+    public Patient(String id, String name, LocalDate dateOfBirth){
         this.recordIds = new ArrayList<>();
         this.id = id;
         this.name = name;
+        this.dateOfBirth = dateOfBirth;
     }
     
     public String getId() {
@@ -29,8 +24,21 @@ public class Patient {
         return name;
     }
     
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+    
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+    
     public List<String> getRecordIds(){
         return recordIds;
+    }
+    
+    public void addRecord(String recordId)
+    {
+        this.recordIds.add(recordId);
     }
     
     public void setName(String name) {

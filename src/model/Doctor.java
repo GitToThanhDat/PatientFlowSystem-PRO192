@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author ACER
- */
 public class Doctor extends User{
     private String departmentId;
     private String currentRecordId;
@@ -23,5 +15,11 @@ public class Doctor extends User{
     }
     public String getCurrentRecordId(){
         return this.currentRecordId;
+    }
+    public void setDepartmentId(String id){
+        this.departmentId=id;
+    }
+    public void setCurrentRecordId(String id){
+        this.currentRecordId=id;
     }
 }
