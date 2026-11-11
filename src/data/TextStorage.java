@@ -40,7 +40,7 @@ public final class TextStorage {
         File target = new File(dir, fileName);
         File temp = new File(dir, fileName + ".tmp");
 
-        try (BufferedWriter out = Files.newBufferedWriter(temp.toPath(), StandardCharsets.UTF_8)) {
+        try (BufferedWriter out = Files.newBufferedWriter(temp.toPath(), StandardCharsets.US_ASCII)) {
             out.write("# " + header);
             out.newLine();
             for (String line : lines) {
@@ -67,20 +67,18 @@ public final class TextStorage {
             return rows;
         }
         int lineNumber = 0;
-        try (BufferedReader in = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
+        try (BufferedReader in = Files.newBufferedReader(file.toPath(), StandardCharsets.US_ASCII)) {
             String line;
             while ((line = in.readLine()) != null) {
                 lineNumber++;
-                if (lineNumber == 1 && line.startsWith("﻿")) {
-                    line = line.substring(1);
-                }
                 if (line.trim().isEmpty() || line.startsWith("#")) {
                     continue;
                 }
                 rows.add(splitFields(line));
             }
         } catch (java.nio.charset.MalformedInputException e) {
-            throw quarantine(fileName, "line " + (lineNumber + 1) + " is not valid UTF-8 text", e);
+            throw quarantine(fileName, "line " + (lineNumber + 1)
+                    + " contains characters that are not plain ASCII text", e);
         }
         return rows;
     }

@@ -14,7 +14,15 @@ public final class Validator {
         if (value == null || value.trim().isEmpty()) {
             throw new InvalidInputException(label + " must not be empty.");
         }
-        return value.trim();
+        String text = value.trim();
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c < 32 || c > 126) {
+                throw new InvalidInputException(label + " must be typed without"
+                        + " accents (letters a-z, digits and standard symbols only).");
+            }
+        }
+        return text;
     }
 
     public static String requireName(String value, String label) throws InvalidInputException {

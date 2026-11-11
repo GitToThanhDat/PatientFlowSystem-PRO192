@@ -8,6 +8,7 @@ import model.Doctor;
 import model.Record;
 import model.RecordStatus;
 import model.VisitSegment;
+import util.Validator;
 
 public class ExaminationService {
 
@@ -53,9 +54,7 @@ public class ExaminationService {
             throw new InvalidInputException("Doctor '" + doctor.getFullName()
                     + "' is not examining any patient. Call a patient first.");
         }
-        if (diagnosis == null || diagnosis.trim().isEmpty()) {
-            throw new InvalidInputException("Diagnosis must not be empty.");
-        }
+        String cleanDiagnosis = Validator.requireText(diagnosis, "Diagnosis");
 
         String recordId = doctor.getCurrentRecordId();
         Record record = _recordService.findById(recordId);
@@ -70,7 +69,7 @@ public class ExaminationService {
             seg = new VisitSegment(doctor.getDepartmentId());
             seg.setDoctorId(doctor.getId());
         }
-        seg.setDiagnosis(diagnosis.trim());
+        seg.setDiagnosis(cleanDiagnosis);
         seg.setEndTime(LocalDateTime.now());
         record.addToHistory(seg);
         _recordService.updateStatus(recordId, RecordStatus.DONE);
