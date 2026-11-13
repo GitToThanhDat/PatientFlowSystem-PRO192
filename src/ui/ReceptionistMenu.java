@@ -216,6 +216,7 @@ public class ReceptionistMenu {
         while (true) {
             String text = ConsoleIO.readLine("Patient name (0 to cancel): ");
             if (text.equals("0")) {
+                ConsoleIO.info("Registration cancelled.");
                 return null;
             }
             try {
@@ -230,6 +231,7 @@ public class ReceptionistMenu {
         while (true) {
             String text = ConsoleIO.readLine("Date of birth (dd/MM/yyyy, required, 0 to cancel): ");
             if (text.equals("0")) {
+                ConsoleIO.info("Registration cancelled.");
                 return null;
             }
             try {

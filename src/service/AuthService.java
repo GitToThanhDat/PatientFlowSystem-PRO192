@@ -63,7 +63,7 @@ public class AuthService {
         }
         String cleanUserName = Validator.requireName(userName, "Username");
         String cleanPassword = Validator.requireText(password, "Password");
-        String cleanFullName = Validator.requireText(fullName, "Full name");
+        String cleanFullName = TextUtils.normalizeName(Validator.requireText(fullName, "Full name"));
 
         if (findByUserName(cleanUserName) != null){
             throw new DuplicateDataException("Username '" + cleanUserName + "' already exists.");
@@ -110,7 +110,7 @@ public class AuthService {
         if (u == null) {
             throw new NotFoundException("Account '" + userName + "' not found.");
         }
-        u.setFullName(Validator.requireText(newFullName, "Full name"));
+        u.setFullName(TextUtils.normalizeName(Validator.requireText(newFullName, "Full name")));
     }
 
     public void deactivateAccount(String userName) throws NotFoundException {

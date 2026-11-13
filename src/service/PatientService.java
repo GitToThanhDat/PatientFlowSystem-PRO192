@@ -71,7 +71,7 @@ public class PatientService {
     }
 
     public String checkName(String name) throws InvalidInputException {
-        return Validator.requireName(name, "Patient name");
+        return TextUtils.normalizeName(Validator.requireName(name, "Patient name"));
     }
 
     public void checkDateOfBirth(LocalDate dateOfBirth) throws InvalidInputException {

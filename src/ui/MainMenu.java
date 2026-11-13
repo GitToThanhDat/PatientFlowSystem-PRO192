@@ -35,8 +35,7 @@ public class MainMenu {
     private final RecordService recordService = new RecordService(patientService, departmentService);
     private final QueueService queueService = new QueueService(new FCFSStrategy());
     private final ExaminationService examinationService = new ExaminationService(recordService, queueService);
-    private final StatisticsService statisticsService =
-            new StatisticsService(patientService, departmentService, recordService);
+    private final StatisticsService statisticsService = new StatisticsService(patientService, departmentService, recordService);
 
     private final DepartmentData departmentData = new DepartmentData();
     private final PatientData patientData = new PatientData();

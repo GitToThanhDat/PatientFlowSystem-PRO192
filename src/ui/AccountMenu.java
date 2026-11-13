@@ -84,7 +84,8 @@ public class AccountMenu {
         String password = ConsoleIO.readLine("Password: ");
         String fullName = ConsoleIO.readLine("Full name: ");
         String id = _authService.register(role, userName, password, fullName);
-        ConsoleIO.success(role + " account created for '" + fullName.trim() + "' (username: " + id + ").");
+        ConsoleIO.success(role + " account created for '" + _authService.findByUserName(id).getFullName()
+                + "' (username: " + id + ").");
     }
 
     private void listAccounts() {

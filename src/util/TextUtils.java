@@ -18,6 +18,13 @@ public class TextUtils {
         return noAccent.replace(" ", "").toLowerCase();
     }
     
+    public static String normalizeName(String name) {
+        if (name == null) {
+            return "";
+        }
+        return name.trim().replaceAll("\\s+", " ");
+    }
+
     public static boolean sameName(String a, String b) {
         return cleanName(a).equals(cleanName(b));
     }

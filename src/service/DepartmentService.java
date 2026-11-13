@@ -49,7 +49,7 @@ public class DepartmentService {
     }
 
     private String checkName(String name) throws InvalidInputException {
-        return Validator.requireName(name, "Department name");
+        return TextUtils.normalizeName(Validator.requireName(name, "Department name"));
     }
 
     public String addDepartment(String name)
